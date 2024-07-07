@@ -11,17 +11,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "user_scores")
+@Table(name = "questions_Kr")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Rank {
+public class QuestionsKr {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
-  private String userId;
+  private String question;
+  private String answer;
   private int score;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
+  private int contentTypeId;
+  private int beenCalled;
+  private int beenPassed;
+  private LocalDateTime createAt;
+  private LocalDateTime updateAt;
+  private LocalDateTime deleteAt;
+
 }

@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @NoArgsConstructor
 @Getter
 @Setter
@@ -14,7 +12,7 @@ import java.time.LocalDate;
 
 public class RankReadResponse {
 
-    private String sub;
-    private Long gameScore;
+  private String userId;
+  private Long gameScore;
 
 }

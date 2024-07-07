@@ -1,5 +1,6 @@
 package project.maru.application.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,9 @@ public class RankService {
   @Autowired
   private RankRepository rankRepository;
 
-  public Long findTotalScoreByUserId(String sub) {
-    //rankRepository.sumScoreBySub(sub);
-    return rankRepository.sumScoreBySub(sub);
+  public List<Rank> findTotalScoreByUserId(String userId) {
+    //rankRepository.sumScoreByuserId(userId);
+    return rankRepository.findByUserId(userId);
   }
 
   public List<Rank> getTop20SubScoresWithDetails() {
@@ -30,7 +31,15 @@ public class RankService {
     // Retrieve detailed information for these subs
     return rankRepository.findBySubIn(topSubs);
   }
-    /*public RankReadResponse getRankDetails(String sub){
-        Long myTotalScore =
-    }*/
+
+  public List<Object> getMyScoreAndTop20Rank(String userId) {
+    if (findTotalScoreByUserId(userId).isEmpty()) {
+      throw new IllegalStateException("조회할 수 없는 아이디 입니다.");
+    } else {
+      List<Object> list = new ArrayList<>();
+      list.add(findTotalScoreByUserId(userId));
+      list.add(getTop20SubScoresWithDetails());
+      return list;
+    }
+  }
 }
