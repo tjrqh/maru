@@ -13,7 +13,7 @@ import project.maru.domain.VoiceRecords;
 import project.maru.presentation.util.CognitoJWTParser;
 
 @RestController
-@RequestMapping("/voice")
+@RequestMapping("api/voice")
 public class VoiceRecordsController {
 
   @Autowired

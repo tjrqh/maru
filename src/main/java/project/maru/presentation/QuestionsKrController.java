@@ -9,14 +9,15 @@ import project.maru.application.dto.QuestionKrDto.QuestionsKrReadResponse;
 import project.maru.application.service.QuestionsKrService;
 
 @RestController
-@RequestMapping("/question")
+@RequestMapping("/api/learning")
 public class QuestionsKrController {
 
   @Autowired
   private QuestionsKrService questionsKrService;
 
-  @GetMapping("/kr")
-  public QuestionsKrReadResponse getQuestionsKr(@RequestParam int contentTypeId) {
+  @GetMapping("/questions")
+  public QuestionsKrReadResponse getQuestionsKr(@RequestParam int contentTypeId,
+      @RequestParam int n) {
     return questionsKrService.getQuestionsKrService(contentTypeId);
   }
 }
