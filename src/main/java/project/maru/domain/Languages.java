@@ -1,5 +1,6 @@
 package project.maru.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "languages")
@@ -21,6 +23,8 @@ public class Languages {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   private String description;
-  private LocalDateTime createAt;
+  @Column(updatable = false)
+  @CreationTimestamp
+  private LocalDateTime createdAt;
 
 }

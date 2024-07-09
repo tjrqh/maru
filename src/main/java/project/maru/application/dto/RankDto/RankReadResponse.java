@@ -13,6 +13,6 @@ import lombok.Setter;
 public class RankReadResponse {
 
   private String userId;
-  private Long gameScore;
+  private int score;
 
 }
