@@ -5,6 +5,8 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import project.maru.application.dto.RankDto.RankReadResponse;
+import project.maru.application.dto.RankDto.RankUpdateRequest;
+import project.maru.domain.Rank;
 import project.maru.instructure.RankRepository;
 
 @Service
@@ -31,8 +33,15 @@ public class RankService {
     return result;
   }
 
+  public Rank updateRank(String accessToken, int score) {
+    int totalScore = rankRepository.findScoreByUserId(accessToken).getScore() + score;
+    System.out.println(totalScore);
+    RankUpdateRequest rankUpdateRequest = new RankUpdateRequest();
+    rankUpdateRequest.setUserId(accessToken);
+    rankUpdateRequest.setScore(totalScore);
+    Rank r = rankRepository.findScoreByUserId(rankUpdateRequest.getUserId());
+    r.setScore(rankUpdateRequest.getScore());
+    return rankRepository.save(r);
+  }
 
-  /*public ResponseEntity<Void> updateUserScore(RankUpdateRequest rankUpdateRequest){
-    rankRepository.
-  }*/
 }

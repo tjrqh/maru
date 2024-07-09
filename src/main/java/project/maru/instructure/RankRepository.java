@@ -9,12 +9,9 @@ import project.maru.domain.Rank;
 
 public interface RankRepository extends JpaRepository<Rank, Long> {
 
-  List<Rank> findByeMail(String eMail);
-
-
-/*  //User의 토큰값(sub)를 받아 그 사람의 전체 Score의 누적 합 쿼리
-  @Query("SELECT SUM(r.score) FROM Rank r WHERE r.eMail = :eMail")
-  Long sumScoreBySub(@Param("eMail") String eMail);*/
+  //Rank의 UserId값을 찾아 Score 반환
+  @Query("SELECT u FROM Rank u WHERE u.userId = :userId")
+  Rank findScoreByUserId(String userId);
 
   @Query("SELECT new project.maru.application.dto.RankDto.RankReadResponse(r.userId, r.score) FROM Rank r WHERE r.userId = :userId")
   List<RankReadResponse> findByUserId(String userId);
@@ -22,6 +19,5 @@ public interface RankRepository extends JpaRepository<Rank, Long> {
   @Query(value = "SELECT new project.maru.application.dto.RankDto.RankReadResponse(r.userId, r.score) FROM Rank r ORDER BY r.score DESC LIMIT :quantity")
   List<RankReadResponse> findTopSubScores(@Param("quantity") int quantity);
 
-  @Query("SELECT new project.maru.application.dto.RankDto.RankReadResponse(r.userId, r.score) FROM Rank r WHERE r.userId IN :userIds")
-  List<RankReadResponse> findBySubIn(List<String> userIds);
+
 }

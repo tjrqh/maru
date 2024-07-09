@@ -34,4 +34,20 @@ public class Rank {
   private LocalDateTime createdAt;
   @UpdateTimestamp
   private LocalDateTime updatedAt;
+
+
+  public Rank(String userId, int score) {
+    this.userId = userId;
+    this.score = score;
+  }
+
+  public Rank(int id, String eMail, String userId, int score) {
+    this.id = id;
+    this.eMail = eMail;
+    this.userId = userId;
+    this.score = score;
+  }
+
+  public Rank(int id, String userId, int score, String eMail) {
+  }
 }
