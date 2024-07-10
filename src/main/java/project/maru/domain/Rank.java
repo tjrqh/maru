@@ -24,7 +24,7 @@ public class Rank {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private Long id;
   private String eMail;
   private String userId;
   private int score;
@@ -34,4 +34,20 @@ public class Rank {
   private LocalDateTime createdAt;
   @UpdateTimestamp
   private LocalDateTime updatedAt;
+
+
+  public Rank(String userId, int score) {
+    this.userId = userId;
+    this.score = score;
+  }
+
+  public Rank(Long id, String eMail, String userId, int score) {
+    this.id = id;
+    this.eMail = eMail;
+    this.userId = userId;
+    this.score = score;
+  }
+
+  public Rank(Long id, String userId, int score, String eMail) {
+  }
 }

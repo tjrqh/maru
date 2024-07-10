@@ -1,29 +1,44 @@
 package project.maru.instructure;
 
 import java.util.List;
-import org.springframework.data.domain.Pageable;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.query.Param;
 import project.maru.application.dto.RankDto.RankReadResponse;
 import project.maru.domain.Rank;
 
-@Repository
 public interface RankRepository extends JpaRepository<Rank, Long> {
 
-  List<Rank> findByeMail(String eMail);
+  //Rank의 UserId값을 찾아 Score 반환
+  @Query(value = "SELECT u FROM Rank u WHERE u.userId = :userId")
+  Rank findScoreByUserId(String userId);
+
+  //  @Query(value = "SELECT new project.maru.application.dto.RankDto.RankReadResponse(r.userId, r.score) FROM Rank r WHERE r.userId = :userId")
+  /*@Query(value =
+      "SELECT new project.maru.application.dto.RankDto.RankReadResponse(r.userId, r.score, " +
+          "(SELECT COUNT(*) + 1 FROM Rank r2 WHERE r2.score > r.score)) " +
+          "FROM Rank r WHERE r.userId = :userId", nativeQuery = true)*/
+//  @Query(SELECT ranking FROM(
+//      SELECT id, name, score, RANK()OVER(ORDER BY score DESC)
+//  as ranking
+//  FROM scores
+//  )
+//  as ranked_scores
+//  WHERE name = 'Alice')
+  @Query("SELECT r FROM Rank r WHERE r.userId = :userId")
+  Optional<Rank> findByUserId(@Param("userId") String userId);
+
+  @Query(value = "SELECT ranking FROM (" +
+      "    SELECT user_id, " +
+      "           RANK() OVER (ORDER BY score DESC) as ranking " +
+      "    FROM user_scores" +
+      ") ranked " +
+      "WHERE user_id = :userId", nativeQuery = true)
+  Integer findRankingByUserId(@Param("userId") String userId);
+
+  @Query(value = "SELECT new project.maru.application.dto.RankDto.RankReadResponse(r.userId, r.score) FROM Rank r ORDER BY r.score DESC LIMIT :quantity")
+  List<RankReadResponse> findTopSubScores(@Param("quantity") int quantity);
 
 
-/*  //User의 토큰값(sub)를 받아 그 사람의 전체 Score의 누적 합 쿼리
-  @Query("SELECT SUM(r.score) FROM Rank r WHERE r.eMail = :eMail")
-  Long sumScoreBySub(@Param("eMail") String eMail);*/
-
-  @Query("SELECT new project.maru.application.dto.RankDto.RankReadResponse(r.userId, r.score) FROM Rank r WHERE r.userId = :userId")
-  List<RankReadResponse> findByUserId(String userId);
-
-  @Query("SELECT new project.maru.application.dto.RankDto.RankReadResponse(r.userId, r.score) FROM Rank r ORDER BY r.score DESC")
-  List<RankReadResponse> findTopSubScores(Pageable pageable);
-
-  @Query("SELECT new project.maru.application.dto.RankDto.RankReadResponse(r.userId, r.score) FROM Rank r WHERE r.userId IN :userIds")
-  List<RankReadResponse> findBySubIn(List<String> userIds);
 }

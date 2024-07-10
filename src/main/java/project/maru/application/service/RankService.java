@@ -1,46 +1,56 @@
 package project.maru.application.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import project.maru.application.dto.RankDto.RankReadResponse;
+import project.maru.application.dto.RankDto.RankUpdateRequest;
+import project.maru.domain.Rank;
 import project.maru.instructure.RankRepository;
 
 @Service
+@RequiredArgsConstructor
 public class RankService {
 
-  @Autowired
-  private RankRepository rankRepository;
+  private final RankRepository rankRepository;
 
-  public List<RankReadResponse> findTotalScoreByUserId(String userId) {
-    return rankRepository.findByUserId(userId);
-  }
-
-  public List<RankReadResponse> getTop20SubScoresWithDetails() {
-    Pageable pageable = PageRequest.of(0, 20);
-    List<RankReadResponse> topSubScores = rankRepository.findTopSubScores(pageable);
-    List<String> topSubs = topSubScores.stream()
-        .map(RankReadResponse::getUserId)
-        .collect(Collectors.toList());
-    return rankRepository.findBySubIn(topSubs);
-  }
-
-  public List<RankReadResponse> getMyScoreAndTop20Rank(String userId) {
-    List<RankReadResponse> userScores = findTotalScoreByUserId(userId);
-    if (userScores.isEmpty()) {
-      throw new IllegalStateException("조회할 수 없는 아이디 입니다.");
-    } else {
-      List<RankReadResponse> result = new ArrayList<>(userScores);
-      result.addAll(getTop20SubScoresWithDetails());
-      return result;
+  public RankReadResponse findTotalScoreByUserId(String userId) {
+    Optional<Rank> rankOptional = rankRepository.findByUserId(userId);
+    Integer ranking = rankRepository.findRankingByUserId(userId);
+    if (rankOptional.isEmpty()) {
+      return null;
     }
+    Rank rank = rankOptional.get();
+    return new RankReadResponse(rank.getUserId(), rank.getScore(), ranking != null ? ranking : 0);
   }
 
-  /*public ResponseEntity<Void> updateUserScore(RankUpdateRequest rankUpdateRequest){
-    rankRepository.
-  }*/
+  public List<RankReadResponse> getTop20SubScoresWithDetails(int quantity) {
+    return rankRepository.findTopSubScores(quantity);
+  }
+
+  public List<RankReadResponse> getMyScoreAndTop20Rank(String userId, int limit,
+      boolean includeUser) {
+    List<RankReadResponse> top20SubScoresWithDetails = getTop20SubScoresWithDetails(limit);
+    for (int i = 0; i < top20SubScoresWithDetails.size(); i++) {
+      RankReadResponse ith = top20SubScoresWithDetails.get(i);
+      ith.setRank(i + 1);
+    }
+    if (includeUser) {
+      top20SubScoresWithDetails.add(findTotalScoreByUserId(userId));
+    }
+    return top20SubScoresWithDetails;
+  }
+
+  public Rank updateRank(String accessToken, int score) {
+    int totalScore = rankRepository.findScoreByUserId(accessToken).getScore() + score;
+    System.out.println(totalScore);
+    RankUpdateRequest rankUpdateRequest = new RankUpdateRequest();
+    rankUpdateRequest.setUserId(accessToken);
+    rankUpdateRequest.setScore(totalScore);
+    Rank r = rankRepository.findScoreByUserId(rankUpdateRequest.getUserId());
+    r.setScore(rankUpdateRequest.getScore());
+    return rankRepository.save(r);
+  }
+
 }
