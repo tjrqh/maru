@@ -26,6 +26,7 @@ public class Rank {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
+  @Column(name="user_id",unique = true)
   private String userId;
   private int score;
 
