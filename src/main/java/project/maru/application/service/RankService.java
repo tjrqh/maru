@@ -1,7 +1,7 @@
 package project.maru.application.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import project.maru.application.dto.RankDto.RankReadResponse;
@@ -15,22 +15,31 @@ public class RankService {
 
   private final RankRepository rankRepository;
 
-  public List<RankReadResponse> findTotalScoreByUserId(String userId) {
-    return rankRepository.findByUserId(userId);
+  public RankReadResponse findTotalScoreByUserId(String userId) {
+    Optional<Rank> rankOptional = rankRepository.findByUserId(userId);
+    Integer ranking = rankRepository.findRankingByUserId(userId);
+    if (rankOptional.isEmpty()) {
+      return null;
+    }
+    Rank rank = rankOptional.get();
+    return new RankReadResponse(rank.getUserId(), rank.getScore(), ranking != null ? ranking : 0);
   }
 
   public List<RankReadResponse> getTop20SubScoresWithDetails(int quantity) {
     return rankRepository.findTopSubScores(quantity);
-
   }
 
   public List<RankReadResponse> getMyScoreAndTop20Rank(String userId, int limit,
       boolean includeUser) {
-    List<RankReadResponse> result = new ArrayList<>(getTop20SubScoresWithDetails(limit));
-    if (includeUser) {
-      result.addAll(findTotalScoreByUserId(userId));
+    List<RankReadResponse> top20SubScoresWithDetails = getTop20SubScoresWithDetails(limit);
+    for (int i = 0; i < top20SubScoresWithDetails.size(); i++) {
+      RankReadResponse ith = top20SubScoresWithDetails.get(i);
+      ith.setRank(i + 1);
     }
-    return result;
+    if (includeUser) {
+      top20SubScoresWithDetails.add(findTotalScoreByUserId(userId));
+    }
+    return top20SubScoresWithDetails;
   }
 
   public Rank updateRank(String accessToken, int score) {
