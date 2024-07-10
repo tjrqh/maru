@@ -10,10 +10,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryLoginCountRequest;
+import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryLoginCountResponse;
 import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryRequest;
 import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryResponse;
 import project.maru.application.dto.LoginHistoryDto.PostLoginRequest;
 import project.maru.application.service.LoginHistoryService;
+import project.maru.presentation.util.ParseToken;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +24,7 @@ import project.maru.application.service.LoginHistoryService;
 public class LoginHistoryController {
 
   private final LoginHistoryService LoginHistoryService;
+  private final ParseToken parseToken;
 
   @GetMapping("")
   public GetLoginHistoryResponse GetLoginHistory(@RequestHeader(value = "Authorization") String accessToken,
@@ -33,5 +37,9 @@ public class LoginHistoryController {
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
-
+  @GetMapping("/login-counts")
+  public GetLoginHistoryLoginCountResponse GetLoginCounts(@RequestHeader(value = "Authorization") String accessToken,
+      GetLoginHistoryLoginCountRequest getLoginHistoryLoginCountRequest){
+      return null;
+    }
 }
