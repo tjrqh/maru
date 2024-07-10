@@ -7,31 +7,24 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name = "user_scores")
+@Table(name = "contentType")
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class Rank {
+public class ContentType {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
-  private String eMail;
-  private String userId;
-  private int score;
+  private String description;
 
   @Column(updatable = false)
   @CreationTimestamp
   private LocalDateTime createdAt;
-  @UpdateTimestamp
-  private LocalDateTime updatedAt;
 }

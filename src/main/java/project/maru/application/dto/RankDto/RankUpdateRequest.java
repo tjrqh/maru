@@ -9,8 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-
-public class RankReadResponse {
+public class RankUpdateRequest {
 
   private String userId;
   private int score;

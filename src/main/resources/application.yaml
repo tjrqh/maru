@@ -1,28 +1,23 @@
+server:
+  port: ${SERVER_PORT}
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/test?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: test
-    password: test
+    url: ${DATA_BASE_URL}
+    username: ${DATA_BASE_ID}
+    password: ${DATA_BASE_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update
     generate-ddl: true
     show-sql: true
     database-platform: org.hibernate.dialect.MariaDBDialect
-  server:
-    port: 8777
+
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
     cache: false
 
-  security:
-    jwt:
-      token:
-        secret-key: ${JWT_TOKEN_SECRET_KEY}
-        expire-length: ${JWT_TOKEN_EXPIRE_LENGTH}
-  upload-dir: src/main/resources/templates/image
 springdoc:
   api-docs:
     enabled: true
@@ -35,3 +30,4 @@ springdoc:
     operationsSorter: method
     disable-swagger-default-url: true
     display-request-duration: true
+

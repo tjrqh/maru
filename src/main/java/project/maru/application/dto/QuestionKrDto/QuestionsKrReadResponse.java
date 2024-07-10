@@ -1,4 +1,4 @@
-package project.maru.application.dto.RankDto;
+package project.maru.application.dto.QuestionKrDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,10 +9,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
+public class QuestionsKrReadResponse {
 
-public class RankReadResponse {
-
-  private String userId;
+  private String question;
+  private String answer;
   private int score;
+  private int contentTypeId;
 
 }
