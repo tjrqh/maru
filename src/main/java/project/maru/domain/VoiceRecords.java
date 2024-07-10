@@ -23,7 +23,7 @@ public class VoiceRecords {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private Long id;
   private String userId;
   private int questionKrId;
   private String speechToText;
@@ -44,7 +44,10 @@ public class VoiceRecords {
     this.deletedAt = LocalDateTime.now();
   }
 
-
-  public VoiceRecords(String userId, int questionsKrId, String speechToText, int matchingRate) {
+  public VoiceRecords(String userId, int questionKrId, String speechToText, int matchingRate) {
+    this.userId = userId;
+    this.questionKrId = questionKrId;
+    this.speechToText = speechToText;
+    this.matchingRate = matchingRate;
   }
 }

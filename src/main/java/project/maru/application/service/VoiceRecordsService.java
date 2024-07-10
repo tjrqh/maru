@@ -1,21 +1,25 @@
 package project.maru.application.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import project.maru.application.dto.VoiceRecordsDto.VoiceRecordsCreateRequest;
 import project.maru.domain.VoiceRecords;
 import project.maru.instructure.VoiceRecordsRepository;
+import project.maru.presentation.util.CognitoJWTParser;
 
 @Service
+@RequiredArgsConstructor
 public class VoiceRecordsService {
 
-  @Autowired
-  private VoiceRecordsRepository voiceRecordsRepository;
+  private final VoiceRecordsRepository voiceRecordsRepository;
+  private final CognitoJWTParser cognitoJWTParser;
 
+  @Transactional
   public VoiceRecords postVoiceRecords(
       VoiceRecordsCreateRequest vr) {
-    VoiceRecords vrecords = new VoiceRecords(vr.getUserId(), vr.getQuestionsKrId(),
+    VoiceRecords vRecords = new VoiceRecords(vr.getUserId(), vr.getQuestionsKrId(),
         vr.getSpeechToText(), vr.getMatchingRate());
-    return voiceRecordsRepository.save(vrecords);
+    return voiceRecordsRepository.save(vRecords);
   }
 }
