@@ -1,6 +1,5 @@
 package project.maru.presentation;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -8,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import project.maru.application.dto.RankDto.RankReadResponse;
+import project.maru.application.dto.RankDto.RankJsonResponse;
 import project.maru.application.service.RankService;
 import project.maru.domain.Rank;
 import project.maru.presentation.util.ParseToken;
@@ -23,7 +22,7 @@ public class RankController {
 
 
   @GetMapping("/rankings")
-  public List<RankReadResponse> getScore(@RequestHeader("Authorization") String accessToken,
+  public RankJsonResponse getScore(@RequestHeader("Authorization") String accessToken,
       @RequestParam int limit, @RequestParam boolean includeUser)
       throws Exception {
     String userId = parseToken.getParseToken(accessToken);

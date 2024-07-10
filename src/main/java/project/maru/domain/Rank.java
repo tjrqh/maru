@@ -25,7 +25,7 @@ public class Rank {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private String eMail;
+  private String name;
   private String userId;
   private int score;
 
@@ -41,13 +41,13 @@ public class Rank {
     this.score = score;
   }
 
-  public Rank(Long id, String eMail, String userId, int score) {
+  public Rank(Long id, String name, String userId, int score) {
     this.id = id;
-    this.eMail = eMail;
+    this.name = name;
     this.userId = userId;
     this.score = score;
   }
 
-  public Rank(Long id, String userId, int score, String eMail) {
+  public Rank(Long id, String userId, int score, String name) {
   }
 }

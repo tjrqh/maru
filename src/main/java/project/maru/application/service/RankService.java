@@ -4,16 +4,20 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import project.maru.application.dto.RankDto.RankJsonResponse;
 import project.maru.application.dto.RankDto.RankReadResponse;
 import project.maru.application.dto.RankDto.RankUpdateRequest;
 import project.maru.domain.Rank;
 import project.maru.instructure.RankRepository;
+
 
 @Service
 @RequiredArgsConstructor
 public class RankService {
 
   private final RankRepository rankRepository;
+  private RankJsonResponse rankJsonResponse;
+
 
   public RankReadResponse findTotalScoreByUserId(String userId) {
     Optional<Rank> rankOptional = rankRepository.findByUserId(userId);
@@ -25,21 +29,31 @@ public class RankService {
     return new RankReadResponse(rank.getUserId(), rank.getScore(), ranking != null ? ranking : 0);
   }
 
-  public List<RankReadResponse> getTop20SubScoresWithDetails(int quantity) {
+  public List<RankReadResponse> getTopRankLimitByScore(int quantity) {
     return rankRepository.findTopSubScores(quantity);
   }
 
-  public List<RankReadResponse> getMyScoreAndTop20Rank(String userId, int limit,
+  public RankJsonResponse getMyScoreAndTop20Rank(String userId, int limit,
       boolean includeUser) {
-    List<RankReadResponse> top20SubScoresWithDetails = getTop20SubScoresWithDetails(limit);
-    for (int i = 0; i < top20SubScoresWithDetails.size(); i++) {
-      RankReadResponse ith = top20SubScoresWithDetails.get(i);
+
+    List<RankReadResponse> topRankLimitByScore = getTopRankLimitByScore(limit);
+    for (int i = 0; i < topRankLimitByScore.size(); i++) {
+      RankReadResponse ith = topRankLimitByScore.get(i);
       ith.setRank(i + 1);
     }
     if (includeUser) {
-      top20SubScoresWithDetails.add(findTotalScoreByUserId(userId));
+      rankJsonResponse = new RankJsonResponse(topRankLimitByScore,
+          findTotalScoreByUserId(userId));
+    } else {
+      rankJsonResponse = new RankJsonResponse(topRankLimitByScore);
     }
-    return top20SubScoresWithDetails;
+
+    /*JSONObject finalObject = new JSONObject();
+    finalObject.put("rankings", topRankLimitByScore);
+    if (includeUser) {
+      finalObject.put("user_ranking", findTotalScoreByUserId(userId));
+    }*/
+    return rankJsonResponse;
   }
 
   public Rank updateRank(String accessToken, int score) {
