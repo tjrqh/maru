@@ -17,6 +17,6 @@ public class RankUpdateRequest {
   private int id;
   private String userId;
   private int score;
-  private String eMail;
+  private String name;
 
 }
