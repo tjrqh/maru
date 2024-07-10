@@ -1,6 +1,7 @@
 package project.maru.presentation;
 
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,19 +28,26 @@ public class LoginHistoryController {
   private final ParseToken parseToken;
 
   @GetMapping("")
-  public GetLoginHistoryResponse GetLoginHistory(@RequestHeader(value = "Authorization") String accessToken,
-      GetLoginHistoryRequest getLoginHistoryRequest){
-    return null;
+  public List<GetLoginHistoryResponse> GetLoginHistory(@RequestHeader(value = "Authorization") String accessToken,
+      GetLoginHistoryRequest getLoginHistoryRequest) throws Exception {
+    String userId = parseToken.getParseToken(accessToken);
+    getLoginHistoryRequest.setUserId(userId);
+    return LoginHistoryService.findUserLoginHistory(getLoginHistoryRequest);
   }
   @PostMapping("")
   public ResponseEntity<Void> PostLoginHistory(@RequestHeader(value = "Authorization") String accessToken,
-      PostLoginRequest postLoginRequest){
+      PostLoginRequest postLoginRequest) throws Exception {
+    String userId = parseToken.getParseToken(accessToken);
+    postLoginRequest.setUserId(userId);
+    LoginHistoryService.insertUserLoginHistory(postLoginRequest);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
   @GetMapping("/login-counts")
-  public GetLoginHistoryLoginCountResponse GetLoginCounts(@RequestHeader(value = "Authorization") String accessToken,
-      GetLoginHistoryLoginCountRequest getLoginHistoryLoginCountRequest){
-      return null;
-    }
+  public List<GetLoginHistoryLoginCountResponse> GetLoginCounts(@RequestHeader(value = "Authorization") String accessToken,
+      GetLoginHistoryLoginCountRequest getLoginHistoryLoginCountRequest) throws Exception {
+    String userId = parseToken.getParseToken(accessToken);
+    getLoginHistoryLoginCountRequest.setUserId(userId);
+    return LoginHistoryService.findUserLoginCount(getLoginHistoryLoginCountRequest);
+  }
 }

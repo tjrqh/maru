@@ -11,4 +11,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class PostLoginRequest {
+  private String name;
+  private String userId;
 }
