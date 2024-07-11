@@ -1,6 +1,12 @@
 package project.maru.presentation;
 
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.enums.ParameterStyle;
+import io.swagger.v3.oas.annotations.headers.Header;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +34,11 @@ public class LoginHistoryController {
   private final ParseToken parseToken;
 
   @GetMapping("")
-  public List<GetLoginHistoryResponse> GetLoginHistory(@RequestHeader(value = "Authorization") String accessToken,
+  public List<GetLoginHistoryResponse> GetLoginHistory(
+      @RequestHeader(value = "Authorization")
+      @Parameter(name = "Authorization",in = ParameterIn.HEADER,
+          schema = @Schema(accessMode = AccessMode.READ_ONLY))
+      String accessToken,
       GetLoginHistoryRequest getLoginHistoryRequest) throws Exception {
     String userId = parseToken.getParseToken(accessToken);
     getLoginHistoryRequest.setUserId(userId);
