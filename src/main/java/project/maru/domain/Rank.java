@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,6 +37,11 @@ public class Rank {
   @UpdateTimestamp
   private LocalDateTime updatedAt;
 
+  @Builder
+  public Rank(String userId,String name, int score) {
+    this.userId = userId;
+    this.score = score;
+  }
 
   public Rank(String userId, int score) {
     this.userId = userId;
