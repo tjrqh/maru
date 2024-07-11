@@ -1,7 +1,10 @@
 package project.maru.application.service;
 
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,8 +30,10 @@ public class LoginHistoryService {
 
   public List<GetLoginHistoryResponse> findUserLoginHistory(GetLoginHistoryRequest getLoginHistoryRequest) {
     String userId = getLoginHistoryRequest.getUserId();
-    LocalDate startDate = getLoginHistoryRequest.getStartDate();
-    LocalDate endDate = getLoginHistoryRequest.getEndDate();
+    Timestamp startDate = Timestamp.valueOf(
+        getLoginHistoryRequest.getStartDate().atStartOfDay());
+    Timestamp endDate = Timestamp.valueOf(
+        getLoginHistoryRequest.getEndDate().atTime(LocalTime.MAX));
 
     List<UserLogInLogs> logs = userLoginLogsRepository.findByUserIdAndStartDateAndEndDate(userId, startDate, endDate);
     List<GetLoginHistoryResponse> list = logs.stream()
@@ -54,8 +59,10 @@ public class LoginHistoryService {
 
   public List<GetLoginHistoryLoginCountResponse> findUserLoginCount(GetLoginHistoryLoginCountRequest getLoginHistoryLoginCountRequest){
       String userId = getLoginHistoryLoginCountRequest.getUserId();
-      LocalDate startDate = getLoginHistoryLoginCountRequest.getStartDate();
-      LocalDate endDate = getLoginHistoryLoginCountRequest.getEndDate();
+      Timestamp startDate = Timestamp.valueOf(
+          getLoginHistoryLoginCountRequest.getStartDate().atStartOfDay());
+      Timestamp endDate = Timestamp.valueOf(
+          getLoginHistoryLoginCountRequest.getEndDate().atTime(LocalTime.MAX));
       List<GetLoginHistoryLoginCountResponse> list = new ArrayList<>();
       List<Object[]> results;
     if ("month".equals(getLoginHistoryLoginCountRequest.getType())) {
@@ -67,7 +74,7 @@ public class LoginHistoryService {
             endDate);
       }
       for (Object[] result : results) {
-        LocalDate date = (LocalDate) result[0];
+        LocalDate date = LocalDate.parse((CharSequence) result[0]) ;
         Long count = (Long) result[1];
         list.add(
             GetLoginHistoryLoginCountResponse.builder().count(count.intValue())
