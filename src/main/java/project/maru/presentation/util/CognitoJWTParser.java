@@ -63,12 +63,12 @@ public class CognitoJWTParser {
 
       @Override
       public RSAPrivateKey getPrivateKey() {
-        return null; // Not needed for verification
+        return null;
       }
 
       @Override
       public String getPrivateKeyId() {
-        return null; // Not needed for verification
+        return null;
       }
     };
 
