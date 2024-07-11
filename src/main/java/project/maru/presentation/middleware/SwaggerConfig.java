@@ -1,26 +1,32 @@
 package project.maru.presentation.middleware;
 
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import io.swagger.v3.oas.annotations.info.Info;
-import lombok.RequiredArgsConstructor;
-import org.springdoc.core.models.GroupedOpenApi;
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@OpenAPIDefinition(
-        info = @Info(title = "Zerock App", version = "v1"))
-@RequiredArgsConstructor
 @Configuration
 public class SwaggerConfig {
 
-    @Bean
-    public GroupedOpenApi chatOpenApi(){
-        String[] paths = {"/**"};
-
-        return GroupedOpenApi.builder()
-                .group("Zerock OPEN API v1")
-                .pathsToMatch(paths)
-                .build();
-    }
+  @Bean
+  public OpenAPI customOpenAPI() {
+    return new OpenAPI()
+        .components(new Components()
+            .addSecuritySchemes("bearer-key",
+                new SecurityScheme()
+                    .type(SecurityScheme.Type.HTTP)
+                    .scheme("bearer")
+                    .bearerFormat("JWT"))
+            .addSecuritySchemes("refresh-key",
+                new SecurityScheme()
+                    .type(SecurityScheme.Type.APIKEY)
+                    .in(SecurityScheme.In.HEADER)
+                    .name("X-Refresh-Token")))
+        .info(new Info().title("Maru API").version("1.0.0"));
+  }
 
 }
+
+

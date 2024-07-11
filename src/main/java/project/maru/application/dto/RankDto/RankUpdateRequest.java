@@ -19,4 +19,7 @@ public class RankUpdateRequest {
   private int score;
   private String name;
 
+  public RankUpdateRequest(int score) {
+    this.score = score;
+  }
 }

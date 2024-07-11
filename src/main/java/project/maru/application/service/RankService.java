@@ -47,18 +47,12 @@ public class RankService {
     } else {
       rankJsonResponse = new RankJsonResponse(topRankLimitByScore);
     }
-
-    /*JSONObject finalObject = new JSONObject();
-    finalObject.put("rankings", topRankLimitByScore);
-    if (includeUser) {
-      finalObject.put("user_ranking", findTotalScoreByUserId(userId));
-    }*/
     return rankJsonResponse;
   }
 
   public Rank updateRank(String accessToken, int score) {
+    System.out.println("access Token : " + accessToken);
     int totalScore = rankRepository.findScoreByUserId(accessToken).getScore() + score;
-    System.out.println(totalScore);
     RankUpdateRequest rankUpdateRequest = new RankUpdateRequest();
     rankUpdateRequest.setUserId(accessToken);
     rankUpdateRequest.setScore(totalScore);
