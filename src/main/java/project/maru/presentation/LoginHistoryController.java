@@ -34,18 +34,18 @@ public class LoginHistoryController {
   private final ParseToken parseToken;
 
   @GetMapping("")
+  @Schema(deprecated = true)
   public List<GetLoginHistoryResponse> GetLoginHistory(
-      @RequestHeader(value = "Authorization")
-      @Parameter(name = "Authorization",in = ParameterIn.HEADER,
-          schema = @Schema(accessMode = AccessMode.READ_ONLY))
-      String accessToken,
+      @RequestHeader(value = "Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken,
       GetLoginHistoryRequest getLoginHistoryRequest) throws Exception {
     String userId = parseToken.getParseToken(accessToken);
     getLoginHistoryRequest.setUserId(userId);
     return LoginHistoryService.findUserLoginHistory(getLoginHistoryRequest);
   }
+
   @PostMapping("")
-  public ResponseEntity<Void> PostLoginHistory(@RequestHeader(value = "Authorization") String accessToken,
+  public ResponseEntity<Void> PostLoginHistory(
+      @RequestHeader(value = "Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken,
       PostLoginRequest postLoginRequest) throws Exception {
     String userId = parseToken.getParseToken(accessToken);
     postLoginRequest.setUserId(userId);
@@ -54,7 +54,9 @@ public class LoginHistoryController {
   }
 
   @GetMapping("/login-counts")
-  public List<GetLoginHistoryLoginCountResponse> GetLoginCounts(@RequestHeader(value = "Authorization") String accessToken,
+  @Schema(deprecated = true)
+  public List<GetLoginHistoryLoginCountResponse> GetLoginCounts(
+      @RequestHeader(value = "Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken,
       GetLoginHistoryLoginCountRequest getLoginHistoryLoginCountRequest) throws Exception {
     String userId = parseToken.getParseToken(accessToken);
     getLoginHistoryLoginCountRequest.setUserId(userId);
