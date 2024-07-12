@@ -1,4 +1,4 @@
-package project.maru.application.dto.RankDto;
+package project.maru.application.dto.rankDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,12 +14,9 @@ import lombok.ToString;
 
 public class RankUpdateRequest {
 
-  private int id;
-  private String userId;
-  private int score;
-  private String name;
 
-  public RankUpdateRequest(int score) {
-    this.score = score;
-  }
+  private int score;
+  private int questionKrId;
+  private int beenCalled;
+
 }

@@ -1,4 +1,4 @@
-package project.maru.application.dto.VoiceRecordsDto;
+package project.maru.application.dto.voiceRecordsDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

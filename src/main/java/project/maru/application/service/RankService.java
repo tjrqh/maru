@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import project.maru.application.dto.RankDto.RankJsonResponse;
-import project.maru.application.dto.RankDto.RankReadResponse;
-import project.maru.application.dto.RankDto.RankUpdateRequest;
+import project.maru.application.dto.questionKrDto.QuestionsKrUpdateRequest;
+import project.maru.application.dto.rankDto.RankJsonResponse;
+import project.maru.application.dto.rankDto.RankReadResponse;
+import project.maru.application.dto.rankDto.RankUpdateRequest;
 import project.maru.domain.Rank;
 import project.maru.instructure.RankRepository;
 
@@ -16,6 +17,7 @@ import project.maru.instructure.RankRepository;
 public class RankService {
 
   private final RankRepository rankRepository;
+  private final QuestionsKrService questionsKrService;
   private RankJsonResponse rankJsonResponse;
 
 
@@ -26,7 +28,9 @@ public class RankService {
       return null;
     }
     Rank rank = rankOptional.get();
-    return new RankReadResponse(rank.getUserId(), rank.getScore(), ranking != null ? ranking : 0);
+    System.out.println(rank.getName());
+    System.out.println(rank.getScore());
+    return new RankReadResponse(rank.getName(), rank.getScore(), ranking != null ? ranking : 0);
   }
 
   public List<RankReadResponse> getTopRankLimitByScore(int quantity) {
@@ -41,6 +45,7 @@ public class RankService {
       RankReadResponse ith = topRankLimitByScore.get(i);
       ith.setRank(i + 1);
     }
+    System.out.println(findTotalScoreByUserId(userId));
     if (includeUser) {
       rankJsonResponse = new RankJsonResponse(topRankLimitByScore,
           findTotalScoreByUserId(userId));
@@ -50,15 +55,19 @@ public class RankService {
     return rankJsonResponse;
   }
 
-  public Rank updateRank(String accessToken, int score) {
-    System.out.println("access Token : " + accessToken);
-    int totalScore = rankRepository.findScoreByUserId(accessToken).getScore() + score;
-    RankUpdateRequest rankUpdateRequest = new RankUpdateRequest();
-    rankUpdateRequest.setUserId(accessToken);
-    rankUpdateRequest.setScore(totalScore);
-    Rank r = rankRepository.findScoreByUserId(rankUpdateRequest.getUserId());
-    r.setScore(rankUpdateRequest.getScore());
-    return rankRepository.save(r);
+  public QuestionsKrUpdateRequest updateRank(String accessToken,
+      RankUpdateRequest rankUpdateRequest) {
+    int totalScore =
+        rankRepository.findScoreByUserId(accessToken).getScore() + rankUpdateRequest.getScore();
+    Rank r = rankRepository.findScoreByUserId(accessToken);
+    r.setScore(totalScore);
+
+    int passed = rankUpdateRequest.getBeenCalled();
+    int questId = rankUpdateRequest.getQuestionKrId();
+    questionsKrService.putBeenPassed(questId, passed);
+
+    return questionsKrService.putBeenPassed(questId, passed);
+
   }
 
 }

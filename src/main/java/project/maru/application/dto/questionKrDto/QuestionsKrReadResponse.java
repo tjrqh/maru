@@ -1,4 +1,4 @@
-package project.maru.application.dto.QuestionKrDto;
+package project.maru.application.dto.questionKrDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class QuestionsKrReadResponse {
 
+  private int id;
   private String question;
   private String answer;
   private int score;

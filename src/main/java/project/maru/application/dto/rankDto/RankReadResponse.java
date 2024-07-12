@@ -1,4 +1,4 @@
-package project.maru.application.dto.RankDto;
+package project.maru.application.dto.rankDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,13 +11,12 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RankReadResponse {
 
-  private String userId;
+  private String name;
   private int score;
   private int rank;
 
-  public RankReadResponse(String userId, int score) {
-    this.userId = userId;
+  public RankReadResponse(String name, int score) {
+    this.name = name;
     this.score = score;
   }
-
 }

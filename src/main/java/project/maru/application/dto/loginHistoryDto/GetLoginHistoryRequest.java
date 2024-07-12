@@ -1,4 +1,4 @@
-package project.maru.application.dto.LoginHistoryDto;
+package project.maru.application.dto.loginHistoryDto;
 
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Setter
 @AllArgsConstructor
 public class GetLoginHistoryRequest {
+
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private LocalDate startDate;
 

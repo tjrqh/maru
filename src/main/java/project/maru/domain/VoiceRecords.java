@@ -24,6 +24,7 @@ public class VoiceRecords {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+  @Column(name = "user_id", unique = true)
   private String userId;
   private int questionKrId;
   private String speechToText;

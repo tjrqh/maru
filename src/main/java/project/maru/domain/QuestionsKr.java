@@ -27,8 +27,11 @@ public class QuestionsKr {
   private String question;
   private String answer;
   private int score;
+  @Column(name = "content_type_id")
   private int contentTypeId;
+  @Column(name = "been_called")
   private int beenCalled;
+  @Column(name = "been_passed")
   private int beenPassed;
   @Column(updatable = false)
   @CreationTimestamp

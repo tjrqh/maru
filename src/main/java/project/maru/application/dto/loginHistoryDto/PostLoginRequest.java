@@ -1,4 +1,4 @@
-package project.maru.application.dto.LoginHistoryDto;
+package project.maru.application.dto.loginHistoryDto;
 
 
 import lombok.AllArgsConstructor;
@@ -11,6 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class PostLoginRequest {
+
   private String name;
   private String userId;
 }

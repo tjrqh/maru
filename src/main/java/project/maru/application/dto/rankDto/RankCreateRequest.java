@@ -1,4 +1,4 @@
-package project.maru.application.dto.RankDto;
+package project.maru.application.dto.rankDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

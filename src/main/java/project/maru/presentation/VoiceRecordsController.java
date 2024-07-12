@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import project.maru.application.dto.VoiceRecordsDto.VoiceRecordsCreateRequest;
+import project.maru.application.dto.voiceRecordsDto.VoiceRecordsCreateRequest;
 import project.maru.application.service.VoiceRecordsService;
 import project.maru.domain.VoiceRecords;
 import project.maru.presentation.util.ParseToken;
