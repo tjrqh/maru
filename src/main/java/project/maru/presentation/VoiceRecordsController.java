@@ -25,7 +25,6 @@ public class VoiceRecordsController {
   public VoiceRecords postVoiceRecords(@RequestHeader("Authorization") String accessToken,
       @RequestBody VoiceRecordsCreateRequest voiceRecordsCreateRequest) throws Exception {
     String userId = parseToken.getParseToken(accessToken);
-    voiceRecordsCreateRequest.setUserId(userId);
-    return voiceRecordsService.postVoiceRecords(voiceRecordsCreateRequest);
+    return voiceRecordsService.postVoiceRecords(userId, voiceRecordsCreateRequest);
   }
 }

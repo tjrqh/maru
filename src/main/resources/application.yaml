@@ -32,3 +32,9 @@ springdoc:
     display-request-duration: true
   show-login-endpoint: true
 
+<<<<<<< Updated upstream
+=======
+cors-allow-domain:
+  front-end: ${FRONT_DOMAIN}
+
+>>>>>>> Stashed changes
