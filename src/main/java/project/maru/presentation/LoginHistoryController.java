@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryCalendarResponse;
 import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryLoginCountRequest;
 import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryLoginCountResponse;
 import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryRequest;
@@ -62,4 +63,14 @@ public class LoginHistoryController {
     getLoginHistoryLoginCountRequest.setUserId(userId);
     return LoginHistoryService.findUserLoginCount(getLoginHistoryLoginCountRequest);
   }
+
+  @GetMapping("/calendar")
+  @Schema(deprecated = true)
+  public List<GetLoginHistoryCalendarResponse> GetLoginCounts(
+      @RequestHeader(value = "Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken)
+      throws Exception {
+    String userId = parseToken.getParseToken(accessToken);
+    return LoginHistoryService.findUserLoginCalendar(userId);
+  }
+
 }
