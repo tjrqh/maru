@@ -22,6 +22,7 @@ import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryLoginCountReq
 import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryLoginCountResponse;
 import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryRequest;
 import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryResponse;
+import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryTodayCountResponse;
 import project.maru.application.dto.LoginHistoryDto.PostLoginRequest;
 import project.maru.application.dto.ResponseStatus;
 import project.maru.application.dto.SimpleApiResponse;
@@ -63,9 +64,6 @@ public class LoginHistoryController {
     return SimpleApiResponse.builder().
         message(userId + " logged in!")
         .status(ResponseStatus.SUCCESS).build();
-
-//    return ResponseEntity.status(HttpStatus.CREATED).body(simpleApiResponse);
-
   }
 
   @GetMapping("/login-counts")
@@ -76,6 +74,14 @@ public class LoginHistoryController {
     String userId = parseToken.getParseToken(accessToken);
     getLoginHistoryLoginCountRequest.setUserId(userId);
     return LoginHistoryService.findUserLoginCount(getLoginHistoryLoginCountRequest);
+  }
+
+  @Operation(summary = "오늘 로그인한 회원 수")
+  @GetMapping("/total/today")
+  public GetLoginHistoryTodayCountResponse GetLoginCountsToday(
+      @RequestHeader(value = "Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken)
+      throws Exception {
+    return LoginHistoryService.findTodayLoginTotal();
   }
 
   @GetMapping("/calendar")

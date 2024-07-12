@@ -19,6 +19,7 @@ import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryLoginCountReq
 import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryLoginCountResponse;
 import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryRequest;
 import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryResponse;
+import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryTodayCountResponse;
 import project.maru.application.dto.LoginHistoryDto.PostLoginRequest;
 import project.maru.domain.Rank;
 import project.maru.domain.UserLogInLogs;
@@ -79,6 +80,18 @@ public class LoginHistoryService {
             .date(LocalDate.parse((CharSequence) row[0]))
             .userId(userId).build())
         .collect(Collectors.toList());
+
+  }
+
+  public GetLoginHistoryTodayCountResponse findTodayLoginTotal() {
+    LocalDate now = LocalDate.now();
+    Timestamp startDate = Timestamp.valueOf(
+        now.atStartOfDay());
+    Timestamp endDate = Timestamp.valueOf(
+        now.atTime(LocalTime.MAX));
+    Integer count = userLoginLogsRepository.countLoginUsers(startDate, endDate);
+
+    return GetLoginHistoryTodayCountResponse.builder().todayLoginUsers(count).build();
 
   }
 

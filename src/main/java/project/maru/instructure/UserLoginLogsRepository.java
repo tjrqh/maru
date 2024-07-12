@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import project.maru.application.dto.RankDto.RankReadResponse;
 import project.maru.domain.UserLogInLogs;
 
 public interface UserLoginLogsRepository extends JpaRepository<UserLogInLogs, Long> {
@@ -22,6 +23,11 @@ public interface UserLoginLogsRepository extends JpaRepository<UserLogInLogs, Lo
   List<UserLogInLogs> findByUserIdAndStartDateAndEndDate(
       @Param("userId") String userId,
       @Param("startDate") Timestamp startDate,
+      @Param("endDate") Timestamp endDate);
+
+  @Query(value = "SELECT COUNT(lh.id) FROM user_login_logs lh WHERE  lh.created_at BETWEEN :startDate AND :endDate GROUP BY lh.id",
+      nativeQuery = true)
+  Integer countLoginUsers(@Param("startDate") Timestamp startDate,
       @Param("endDate") Timestamp endDate);
 
 
