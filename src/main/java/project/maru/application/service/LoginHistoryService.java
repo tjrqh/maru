@@ -4,11 +4,13 @@ package project.maru.application.service;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.YearMonth;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.asm.Advice.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryLoginCountRequest;
@@ -59,12 +61,24 @@ public class LoginHistoryService {
 
   public List<GetLoginHistoryLoginCountResponse> findUserLoginCount(GetLoginHistoryLoginCountRequest getLoginHistoryLoginCountRequest){
       String userId = getLoginHistoryLoginCountRequest.getUserId();
-      Timestamp startDate = Timestamp.valueOf(
-          getLoginHistoryLoginCountRequest.getStartDate().atStartOfDay());
-      Timestamp endDate = Timestamp.valueOf(
-          getLoginHistoryLoginCountRequest.getEndDate().atTime(LocalTime.MAX));
+      LocalDate startDay = getLoginHistoryLoginCountRequest.getStartDate();
+      LocalDate endDay = getLoginHistoryLoginCountRequest.getEndDate();
+      Timestamp startDate,endDate;
+
+      if(startDay == null){
+        startDay = LocalDate.now().withDayOfMonth(1);
+        endDay = YearMonth.from(startDay).atEndOfMonth();
+      }
+      if(endDay == null){
+        endDay = YearMonth.from(startDay).atEndOfMonth();
+      }
+      startDate = Timestamp.valueOf(
+          startDay.atStartOfDay());
+      endDate = Timestamp.valueOf(
+          endDay.atTime(LocalTime.MAX));
       List<GetLoginHistoryLoginCountResponse> list = new ArrayList<>();
       List<Object[]> results;
+
     if ("month".equals(getLoginHistoryLoginCountRequest.getType())) {
         // 월별 로그인 횟수 조회
         results = userLoginLogsRepository.countLoginByMonth(userId,startDate, endDate);
