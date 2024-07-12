@@ -37,7 +37,7 @@ public class LoginHistoryController {
   private final ParseToken parseToken;
 
   @GetMapping("")
-  @Schema(deprecated = true)
+  @Operation(deprecated = true)
   public List<GetLoginHistoryResponse> GetLoginHistory(
       @RequestHeader(value = "Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken,
       GetLoginHistoryRequest getLoginHistoryRequest) throws Exception {
@@ -47,7 +47,7 @@ public class LoginHistoryController {
   }
 
   @PostMapping("")
-  @Operation(summary = "insert login user history", responses = {
+  @Operation(summary = "로그인 기록 추가", responses = {
       @ApiResponse(responseCode = "201", description = "successfully",
           content = @Content(mediaType = "application/json",
               schema = @Schema(implementation = SimpleApiResponse.class)))
@@ -69,7 +69,7 @@ public class LoginHistoryController {
   }
 
   @GetMapping("/login-counts")
-  @Schema(deprecated = true)
+  @Operation(deprecated = true)
   public List<GetLoginHistoryLoginCountResponse> GetLoginCounts(
       @RequestHeader(value = "Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken,
       GetLoginHistoryLoginCountRequest getLoginHistoryLoginCountRequest) throws Exception {
@@ -79,8 +79,8 @@ public class LoginHistoryController {
   }
 
   @GetMapping("/calendar")
-  @Schema(deprecated = true)
-  public List<GetLoginHistoryCalendarResponse> GetLoginCounts(
+  @Operation(summary = "이번달 로그인 이력 조회")
+  public List<GetLoginHistoryCalendarResponse> GetLoginCalendar(
       @RequestHeader(value = "Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken)
       throws Exception {
     String userId = parseToken.getParseToken(accessToken);
