@@ -1,5 +1,8 @@
 package project.maru.presentation;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,7 +27,8 @@ public class RankController {
 
 
   @GetMapping("/rankings")
-  public RankJsonResponse getScore(@RequestHeader("Authorization") String accessToken,
+  public RankJsonResponse getScore(
+      @RequestHeader("Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken,
       @RequestParam int limit, @RequestParam boolean includeUser)
       throws Exception {
     String userId = parseToken.getParseToken(accessToken);
@@ -32,7 +36,8 @@ public class RankController {
   }
 
   @PutMapping("/update")
-  public Rank updateScore(@RequestHeader("Authorization") String accessToken,
+  public Rank updateScore(
+      @RequestHeader("Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken,
       @RequestBody RankUpdateRequest rankUpdateRequest) throws Exception {
     String userId = parseToken.getParseToken(accessToken);
     return rankService.updateRank(userId, rankUpdateRequest.getScore());
