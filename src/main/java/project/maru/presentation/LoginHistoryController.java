@@ -1,15 +1,15 @@
 package project.maru.presentation;
 
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.enums.ParameterStyle;
-import io.swagger.v3.oas.annotations.headers.Header;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.catalina.filters.AddDefaultCharsetFilter.ResponseWrapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +23,8 @@ import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryLoginCountRes
 import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryRequest;
 import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryResponse;
 import project.maru.application.dto.LoginHistoryDto.PostLoginRequest;
+import project.maru.application.dto.ResponseStatus;
+import project.maru.application.dto.SimpleApiResponse;
 import project.maru.application.service.LoginHistoryService;
 import project.maru.presentation.util.ParseToken;
 
@@ -45,13 +47,25 @@ public class LoginHistoryController {
   }
 
   @PostMapping("")
-  public ResponseEntity<Void> PostLoginHistory(
+  @Operation(summary = "insert login user history", responses = {
+      @ApiResponse(responseCode = "201", description = "successfully",
+          content = @Content(mediaType = "application/json",
+              schema = @Schema(implementation = SimpleApiResponse.class)))
+  })
+  @Schema(example = "{\"status\":\"success\", \"message\":\"userId logged in!\", \"data\":null}")
+  public SimpleApiResponse<?> PostLoginHistory(
       @RequestHeader(value = "Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken,
       PostLoginRequest postLoginRequest) throws Exception {
     String userId = parseToken.getParseToken(accessToken);
     postLoginRequest.setUserId(userId);
     LoginHistoryService.insertUserLoginHistory(postLoginRequest);
-    return ResponseEntity.status(HttpStatus.CREATED).build();
+
+    return SimpleApiResponse.builder().
+        message(userId + " logged in!")
+        .status(ResponseStatus.SUCCESS).build();
+
+//    return ResponseEntity.status(HttpStatus.CREATED).body(simpleApiResponse);
+
   }
 
   @GetMapping("/login-counts")
