@@ -32,3 +32,6 @@ springdoc:
     display-request-duration: true
   show-login-endpoint: true
 
+cors-allow-domain:
+  front-end : ${FRONT_DOMAIN}
+
