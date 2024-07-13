@@ -7,9 +7,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +25,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class QuestionsKr {
+public class  QuestionsKr {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,6 +47,15 @@ public class QuestionsKr {
   @ManyToOne
   @JoinColumn(name = "quotes_id")
   private Quotes quotes;
+
+
+  @OneToMany(mappedBy = "questionsKr")
+  private List<QuestionLanguage> questionLanguages;
+
+  @OneToMany(mappedBy = "questionsKr")
+  private List<VoiceRecords> voiceRecords;
+
+
 
 
   @PreRemove

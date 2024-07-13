@@ -28,8 +28,6 @@ public class RankService {
       return null;
     }
     Rank rank = rankOptional.get();
-    System.out.println(rank.getName());
-    System.out.println(rank.getScore());
     return new RankReadResponse(rank.getName(), rank.getScore(), ranking != null ? ranking : 0);
   }
 
@@ -58,6 +56,7 @@ public class RankService {
 
   public QuestionsKr updateRank(String accessToken, RankUpdateRequest rankUpdateRequest) {
     Rank r = rankRepository.findScoreByUserId(accessToken);
+    //issue.
     int totalScore = rankUpdateRequest.getScore() + r.getScore();
     r.setScore(totalScore);
     rankRepository.save(r);
