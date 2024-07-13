@@ -3,7 +3,7 @@ package project.maru.application.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import project.maru.application.dto.UserDto.UserTotalCountResponse;
-import project.maru.instructure.UsersRepository;
+import project.maru.infrastructure.UsersRepository;
 
 @Service
 @RequiredArgsConstructor

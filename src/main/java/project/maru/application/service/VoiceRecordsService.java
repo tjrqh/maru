@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.maru.application.dto.voiceRecordsDto.VoiceRecordsCreateRequest;
 import project.maru.domain.VoiceRecords;
-import project.maru.instructure.VoiceRecordsRepository;
+import project.maru.infrastructure.VoiceRecordsRepository;
 
 @Service
 @RequiredArgsConstructor

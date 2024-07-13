@@ -9,7 +9,7 @@ import project.maru.application.dto.rankDto.RankReadResponse;
 import project.maru.application.dto.rankDto.RankUpdateRequest;
 import project.maru.domain.QuestionsKr;
 import project.maru.domain.Rank;
-import project.maru.instructure.RankRepository;
+import project.maru.infrastructure.RankRepository;
 
 
 @Service
