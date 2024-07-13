@@ -1,4 +1,4 @@
-package project.maru.application.dto.UserDto;
+package project.maru.application.dto.userDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

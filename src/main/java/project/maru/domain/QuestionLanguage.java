@@ -28,7 +28,6 @@ public class QuestionLanguage {
   private int id;
   private String question;
   private String answer;
-  private int questionKrId;
 
   @Column(updatable = false)
   @CreationTimestamp
@@ -40,6 +39,10 @@ public class QuestionLanguage {
   @ManyToOne
   @JoinColumn(name = "languages_id")
   private Languages languages;
+
+  @ManyToOne
+  @JoinColumn(name = "question_kr_id")
+  private QuestionsKr questionsKr;
 
   @PreRemove
   private void deleteLogical() {

@@ -31,7 +31,7 @@ public class VoiceRecords {
   private String userId;
 
   @ManyToOne
-  @JoinColumn(name = "question_id")
+  @JoinColumn(name = "questions_id")
   private QuestionsKr questionsKr;
 
   @Column(name = "speech_to_text")
@@ -48,6 +48,8 @@ public class VoiceRecords {
   private LocalDateTime updatedAt;
 
   private LocalDateTime deletedAt;
+
+
 
   @PreRemove
   private void deleteLogical() {
