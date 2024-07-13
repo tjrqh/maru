@@ -26,6 +26,7 @@ public interface RankRepository extends JpaRepository<Rank, Long> {
 //  )
 //  as ranked_scores
 //  WHERE name = 'Alice')
+  @Query("SELECT r FROM Rank r WHERE r.userId = :userId")
   Optional<Rank> findByUserId(@Param("userId") String userId);
 
   @Query(value = "SELECT ranking FROM (" +
@@ -36,7 +37,7 @@ public interface RankRepository extends JpaRepository<Rank, Long> {
       "WHERE user_id = :userId", nativeQuery = true)
   Integer findRankingByUserId(@Param("userId") String userId);
 
-  @Query(value = "SELECT new project.maru.application.dto.rankDto.RankReadResponse(r.userId, r.score) FROM Rank r ORDER BY r.score DESC LIMIT :quantity")
+  @Query(value = "SELECT new project.maru.application.dto.rankDto.RankReadResponse(r.name, r.score) FROM Rank r ORDER BY r.score DESC LIMIT :quantity")
   List<RankReadResponse> findTopSubScores(@Param("quantity") int quantity);
 
 
