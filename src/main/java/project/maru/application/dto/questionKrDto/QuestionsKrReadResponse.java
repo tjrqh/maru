@@ -14,6 +14,6 @@ public class QuestionsKrReadResponse {
   private String question;
   private String answer;
   private int score;
-  private int contentTypeId;
+  private int quotes;
 
 }

@@ -49,17 +49,16 @@ public class VoiceRecords {
 
   private LocalDateTime deletedAt;
 
-
-
   @PreRemove
   private void deleteLogical() {
     // 삭제 시간 설정
     this.deletedAt = LocalDateTime.now();
   }
 
-  public VoiceRecords(String userId, int questionKrId, String speechToText, int matchingRate) {
+  public VoiceRecords(String userId, QuestionsKr questionsKr, String speechToText,
+      int matchingRate) {
     this.userId = userId;
-//    this.questionKrId = questionKrId;
+    this.questionsKr = questionsKr;
     this.speechToText = speechToText;
     this.matchingRate = matchingRate;
   }

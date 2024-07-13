@@ -17,7 +17,7 @@ public class RankUpdateRequest {
 
   private int score;
 
-  @JsonProperty("question_kr_id")
+  @JsonProperty("questions_id")
   private int questionKrId;
 
   @JsonProperty("been_passed")
