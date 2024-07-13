@@ -13,11 +13,6 @@ spring:
     show-sql: true
     database-platform: org.hibernate.dialect.MariaDBDialect
 
-  thymeleaf:
-    prefix: classpath:/templates/
-    suffix: .html
-    cache: false
-
 springdoc:
   api-docs:
     enabled: true
@@ -33,7 +28,7 @@ springdoc:
   show-login-endpoint: true
 
 cors-allow-domain:
-  front-end : ${FRONT_DOMAIN}
-  test-end : ${TEST_DOMAIN}
+  front-end: ${FRONT_DOMAIN}
+  test-end: ${TEST_DOMAIN}
 
 

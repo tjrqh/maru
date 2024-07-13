@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
@@ -29,8 +31,6 @@ public class QuestionsKr {
   private String question;
   private String answer;
   private int score;
-  @Column(name = "content_type_id")
-  private int contentTypeId;
   @Column(name = "been_called")
   private int beenCalled;
   @Column(name = "been_passed")
@@ -42,6 +42,11 @@ public class QuestionsKr {
   private LocalDateTime updatedAt;
   private LocalDateTime deletedAt;
 
+  @ManyToOne
+  @JoinColumn(name = "quotes_id")
+  private Quotes quotes;
+
+
   @PreRemove
   private void deleteLogical() {
     // 삭제 시간 설정
@@ -52,6 +57,5 @@ public class QuestionsKr {
     this.question = question;
     this.answer = answer;
     this.score = score;
-    this.contentTypeId = contentTypeId;
   }
 }
