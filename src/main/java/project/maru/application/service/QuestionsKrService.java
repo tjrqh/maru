@@ -17,7 +17,6 @@ public class QuestionsKrService {
   public QuestionsKr putUpdatePassed(RankUpdateRequest rankUpdateRequest) {
     QuestionsKr quest = questionsKrRepository.findById(rankUpdateRequest.getQuestionKrId());
     int totalPassed = quest.getBeenPassed();
-
     if (rankUpdateRequest.isBeenPassed()) {
       totalPassed += 1;
     }

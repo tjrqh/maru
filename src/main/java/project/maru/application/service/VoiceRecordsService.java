@@ -16,6 +16,7 @@ public class VoiceRecordsService {
   @Transactional
   public VoiceRecords postVoiceRecords(String id,
       VoiceRecordsCreateRequest vr) {
+    System.out.println(vr.getQuestionsKrId());
     VoiceRecords vRecords = new VoiceRecords(id, vr.getQuestionsKrId(),
         vr.getSpeechToText(), vr.getMatchingRate());
     return voiceRecordsRepository.save(vRecords);
