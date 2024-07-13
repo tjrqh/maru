@@ -1,4 +1,4 @@
-package project.maru.instructure;
+package project.maru.infrastructure;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import project.maru.application.dto.RankDto.RankReadResponse;
+import project.maru.application.dto.rankDto.RankReadResponse;
 import project.maru.domain.UserLogInLogs;
 
 public interface UserLoginLogsRepository extends JpaRepository<UserLogInLogs, Long> {
