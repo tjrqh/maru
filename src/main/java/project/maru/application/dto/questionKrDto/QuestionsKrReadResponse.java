@@ -1,4 +1,4 @@
-package project.maru.application.dto.QuestionKrDto;
+package project.maru.application.dto.questionKrDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
