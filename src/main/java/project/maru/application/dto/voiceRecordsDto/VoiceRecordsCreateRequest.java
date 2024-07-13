@@ -6,17 +6,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import project.maru.domain.QuestionsKr;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @AllArgsConstructor
-@ToString
 public class VoiceRecordsCreateRequest {
 
   private String userId;
 
-  @JsonProperty("question_kr_id")
+  @JsonProperty("questions_id")
   private int questionsKrId;
 
   @JsonProperty("speech_to_text")

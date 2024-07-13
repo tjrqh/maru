@@ -43,7 +43,6 @@ public class RankService {
       RankReadResponse ith = topRankLimitByScore.get(i);
       ith.setRank(i + 1);
     }
-    System.out.println(findTotalScoreByUserId(userId));
     if (includeUser) {
       rankJsonResponse = new RankJsonResponse(topRankLimitByScore,
           findTotalScoreByUserId(userId));

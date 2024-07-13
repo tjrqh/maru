@@ -57,9 +57,10 @@ public class VoiceRecords {
     this.deletedAt = LocalDateTime.now();
   }
 
-  public VoiceRecords(String userId, int questionKrId, String speechToText, int matchingRate) {
+  public VoiceRecords(String userId, QuestionsKr questionsKr, String speechToText,
+      int matchingRate) {
     this.userId = userId;
-//    this.questionKrId = questionKrId;
+    this.questionsKr = questionsKr;
     this.speechToText = speechToText;
     this.matchingRate = matchingRate;
   }

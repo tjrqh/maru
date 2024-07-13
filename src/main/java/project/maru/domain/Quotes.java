@@ -12,7 +12,6 @@ import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
-import javax.swing.text.AbstractDocument.Content;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,7 +29,7 @@ public class Quotes {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   private String title;
-  private String quote;
+
   private String quoteVoiceLink;
 
   @Column(updatable = false)

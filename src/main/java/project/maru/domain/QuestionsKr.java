@@ -1,5 +1,6 @@
 package project.maru.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,9 +22,10 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name = "questions_Kr")
+@Table(name = "questions")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class  QuestionsKr {
@@ -46,6 +49,7 @@ public class  QuestionsKr {
 
   @ManyToOne
   @JoinColumn(name = "quotes_id")
+  @JsonIgnore
   private Quotes quotes;
 
 
@@ -57,16 +61,21 @@ public class  QuestionsKr {
 
 
 
-
   @PreRemove
   private void deleteLogical() {
     // 삭제 시간 설정
     this.deletedAt = LocalDateTime.now();
   }
-
-  public QuestionsKr(String question, String answer, int score, int contentTypeId) {
+  public QuestionsKr(String question, String answer, int score, Quotes quotes) {
     this.question = question;
     this.answer = answer;
     this.score = score;
+    this.quotes = quotes;
   }
+
+  public QuestionsKr(List<VoiceRecords> voiceRecords) {
+    this.voiceRecords = voiceRecords;
+
+
+
 }

@@ -32,6 +32,6 @@ public class Languages {
   private LocalDateTime createdAt;
 
   @OneToMany(mappedBy = "languages")
-  private List<QuestionLanguage> questionLanguages;
+   private List<QuestionLanguage> questionLanguages;
 
 }

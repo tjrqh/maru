@@ -15,7 +15,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
-@Table(name = "contentType")
+@Table(name = "content_type")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -31,6 +31,6 @@ public class ContentType {
   private LocalDateTime createdAt;
 
   @OneToMany(mappedBy = "contentType")
-  private List<Quotes> quotes;
+   private List<Quotes> quotes;
 
 }
