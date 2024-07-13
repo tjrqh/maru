@@ -28,6 +28,7 @@ public class QuestionsKrService {
 
   public QuestionsKrReadResponse getQuestionsKrService(int contentTypeId, int n) {
     return questionsKrRepository.findByQuotesId(contentTypeId);
+
   }
 
   public GetQuestionCountResponse getQuestionTotalCount() {

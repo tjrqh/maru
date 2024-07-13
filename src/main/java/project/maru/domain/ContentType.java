@@ -32,4 +32,5 @@ public class ContentType {
 
   @OneToMany(mappedBy = "contentType")
    private List<Quotes> quotes;
+
 }

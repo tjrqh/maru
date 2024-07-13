@@ -49,6 +49,8 @@ public class VoiceRecords {
 
   private LocalDateTime deletedAt;
 
+
+
   @PreRemove
   private void deleteLogical() {
     // 삭제 시간 설정

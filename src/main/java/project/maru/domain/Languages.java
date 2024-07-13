@@ -34,6 +34,4 @@ public class Languages {
   @OneToMany(mappedBy = "languages")
    private List<QuestionLanguage> questionLanguages;
 
-
-
 }

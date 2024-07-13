@@ -42,6 +42,7 @@ public class QuestionLanguage {
 
   @ManyToOne
   @JoinColumn(name = "questions_id")
+
   private QuestionsKr questionsKr;
 
   @PreRemove
