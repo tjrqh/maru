@@ -2,6 +2,7 @@ package project.maru.application.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import project.maru.application.dto.questionKrDto.GetQuestionCountResponse;
 import project.maru.application.dto.questionKrDto.QuestionsKrReadResponse;
 import project.maru.application.dto.rankDto.RankUpdateRequest;
 import project.maru.domain.QuestionsKr;
@@ -30,4 +31,8 @@ public class QuestionsKrService {
     return questionsKrRepository.findByContentTypeId(contentTypeId);
   }
 
+  public GetQuestionCountResponse getQuestionTotalCount() {
+    return GetQuestionCountResponse.builder()
+        .QuestionTotalCounts(questionsKrRepository.countByDeletedAtIsNull()).build();
+  }
 }
