@@ -10,10 +10,13 @@ public class WebConf implements WebMvcConfigurer {
   @Value("${cors-allow-domain.front-end}")
   private String ALLOW_DOMAIN;
 
+  @Value("${cors-allow-domain.test-end}")
+  private String TEST_DOMAIN;
+
   @Override
   public void addCorsMappings(CorsRegistry registry) {
     registry.addMapping("/**")
-        .allowedOrigins(ALLOW_DOMAIN,"http://127.0.0.1:3000")
+        .allowedOrigins(ALLOW_DOMAIN,TEST_DOMAIN,"http://127.0.0.1:3000")
         .allowedMethods("GET", "POST", "PUT", "DELETE")
         .allowedHeaders("Authorization", "Content-Type")
         .allowCredentials(true)

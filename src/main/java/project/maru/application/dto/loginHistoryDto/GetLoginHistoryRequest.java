@@ -1,5 +1,6 @@
 package project.maru.application.dto.loginHistoryDto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +21,7 @@ public class GetLoginHistoryRequest {
   private LocalDate endDate;
 
   private String type;
+  @Schema(hidden = true)
   private String userId;
 
   public GetLoginHistoryRequest(String userId, LocalDate startDate, LocalDate endDate) {

@@ -1,24 +1,26 @@
 package project.maru.application.service;
 
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
-<<<<<<< Updated upstream
-=======
 import java.time.YearMonth;
->>>>>>> Stashed changes
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.asm.Advice.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project.maru.application.dto.loginHistoryDto.GetLoginHistoryLoginCountRequest;
-import project.maru.application.dto.loginHistoryDto.GetLoginHistoryLoginCountResponse;
-import project.maru.application.dto.loginHistoryDto.GetLoginHistoryRequest;
-import project.maru.application.dto.loginHistoryDto.GetLoginHistoryResponse;
-import project.maru.application.dto.loginHistoryDto.PostLoginRequest;
+import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryCalendarResponse;
+import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryLoginCountRequest;
+import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryLoginCountResponse;
+import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryRequest;
+import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryResponse;
+import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryTodayCountResponse;
+import project.maru.application.dto.LoginHistoryDto.PostLoginRequest;
 import project.maru.domain.Rank;
 import project.maru.domain.UserLogInLogs;
 import project.maru.instructure.RankRepository;
@@ -65,17 +67,37 @@ public class LoginHistoryService {
     rankRepository.save(r);
   }
 
+  public List<GetLoginHistoryCalendarResponse> findUserLoginCalendar(String userId) {
+    LocalDate now = LocalDate.now().withDayOfMonth(1);
+    Timestamp startDate = Timestamp.valueOf(
+        now.atStartOfDay());
+    Timestamp endDate = Timestamp.valueOf(
+        YearMonth.from(now).atEndOfMonth().atTime(LocalTime.MAX));
+    List<Object[]> results = userLoginLogsRepository.countLoginByDay(userId, startDate, endDate);
+
+    return results.stream()
+        .map(row -> GetLoginHistoryCalendarResponse.builder()
+            .date(LocalDate.parse((CharSequence) row[0]))
+            .userId(userId).build())
+        .collect(Collectors.toList());
+
+  }
+
+  public GetLoginHistoryTodayCountResponse findTodayLoginTotal() {
+    LocalDate now = LocalDate.now();
+    Timestamp startDate = Timestamp.valueOf(
+        now.atStartOfDay());
+    Timestamp endDate = Timestamp.valueOf(
+        now.atTime(LocalTime.MAX));
+    Integer count = userLoginLogsRepository.countLoginUsers(startDate, endDate);
+
+    return GetLoginHistoryTodayCountResponse.builder().todayLoginUsers(count).build();
+
+  }
+
   public List<GetLoginHistoryLoginCountResponse> findUserLoginCount(
       GetLoginHistoryLoginCountRequest getLoginHistoryLoginCountRequest) {
     String userId = getLoginHistoryLoginCountRequest.getUserId();
-<<<<<<< Updated upstream
-    Timestamp startDate = Timestamp.valueOf(
-        getLoginHistoryLoginCountRequest.getStartDate().atStartOfDay());
-    Timestamp endDate = Timestamp.valueOf(
-        getLoginHistoryLoginCountRequest.getEndDate().atTime(LocalTime.MAX));
-    List<GetLoginHistoryLoginCountResponse> list = new ArrayList<>();
-    List<Object[]> results;
-=======
     LocalDate startDay = getLoginHistoryLoginCountRequest.getStartDate();
     LocalDate endDay = getLoginHistoryLoginCountRequest.getEndDate();
     Timestamp startDate, endDate;
@@ -94,7 +116,6 @@ public class LoginHistoryService {
     List<GetLoginHistoryLoginCountResponse> list = new ArrayList<>();
     List<Object[]> results;
 
->>>>>>> Stashed changes
     if ("month".equals(getLoginHistoryLoginCountRequest.getType())) {
       // 월별 로그인 횟수 조회
       results = userLoginLogsRepository.countLoginByMonth(userId, startDate, endDate);
@@ -103,17 +124,14 @@ public class LoginHistoryService {
       results = userLoginLogsRepository.countLoginByDay(userId, startDate,
           endDate);
     }
-    for (Object[] result : results) {
-      LocalDate date = LocalDate.parse((CharSequence) result[0]);
-      Long count = (Long) result[1];
-      list.add(
-          GetLoginHistoryLoginCountResponse.builder().count(count.intValue())
-              .date(date)
-              .userId(userId)
-              .build()
-      );
-    }
-    return list;
+
+    return results.stream()
+        .map(row -> GetLoginHistoryLoginCountResponse.builder()
+            .date(LocalDate.parse((CharSequence) row[0]))
+            .count((Integer) row[1])
+            .userId(userId).build())
+        .collect(Collectors.toList());
+
   }
 
 }
