@@ -24,9 +24,17 @@ public class VoiceRecords {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+<<<<<<< Updated upstream
+  @Column(name = "user_id", unique = true)
+=======
+  @Column(name = "user_id")
+>>>>>>> Stashed changes
   private String userId;
+  @Column(name = "question_kr_id")
   private int questionKrId;
+  @Column(name = "speech_to_text")
   private String speechToText;
+  @Column(name = "matching_rate")
   private int matchingRate;
 
   @Column(updatable = false)

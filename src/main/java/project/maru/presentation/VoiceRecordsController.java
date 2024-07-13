@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import project.maru.application.dto.VoiceRecordsDto.VoiceRecordsCreateRequest;
+import project.maru.application.dto.voiceRecordsDto.VoiceRecordsCreateRequest;
 import project.maru.application.service.VoiceRecordsService;
 import project.maru.domain.VoiceRecords;
 import project.maru.presentation.util.ParseToken;
@@ -29,7 +29,6 @@ public class VoiceRecordsController {
       @RequestHeader("Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken,
       @RequestBody VoiceRecordsCreateRequest voiceRecordsCreateRequest) throws Exception {
     String userId = parseToken.getParseToken(accessToken);
-    voiceRecordsCreateRequest.setUserId(userId);
-    return voiceRecordsService.postVoiceRecords(voiceRecordsCreateRequest);
+    return voiceRecordsService.postVoiceRecords(userId, voiceRecordsCreateRequest);
   }
 }

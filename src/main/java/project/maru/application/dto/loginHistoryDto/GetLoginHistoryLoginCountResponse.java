@@ -1,4 +1,4 @@
-package project.maru.application.dto.LoginHistoryDto;
+package project.maru.application.dto.loginHistoryDto;
 
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
@@ -14,9 +14,10 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 @Getter
 @Setter
 @AllArgsConstructor
-public class GetLoginHistoryCalendarResponse {
+public class GetLoginHistoryLoginCountResponse {
 
   private String userId;
+  int count;
   @DateTimeFormat(iso = ISO.DATE)
   private LocalDate date;
 }

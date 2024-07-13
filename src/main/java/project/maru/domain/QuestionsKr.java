@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class QuestionsKr {
 
   @Id
@@ -27,8 +29,11 @@ public class QuestionsKr {
   private String question;
   private String answer;
   private int score;
+  @Column(name = "content_type_id")
   private int contentTypeId;
+  @Column(name = "been_called")
   private int beenCalled;
+  @Column(name = "been_passed")
   private int beenPassed;
   @Column(updatable = false)
   @CreationTimestamp

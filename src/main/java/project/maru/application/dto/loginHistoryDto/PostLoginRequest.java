@@ -1,27 +1,19 @@
-package project.maru.application.dto.RankDto;
+package project.maru.application.dto.loginHistoryDto;
+
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @AllArgsConstructor
-@ToString
+public class PostLoginRequest {
 
-public class RankUpdateRequest {
-
-  private int id;
+  private String name;
   @Schema(hidden = true)
   private String userId;
-  private int score;
-  private String name;
-
-  public RankUpdateRequest(int score) {
-    this.score = score;
-  }
 }
