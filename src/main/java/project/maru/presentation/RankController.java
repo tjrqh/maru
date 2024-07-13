@@ -8,17 +8,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-<<<<<<< Updated upstream
-import project.maru.application.dto.questionKrDto.QuestionsKrUpdateRequest;
-import project.maru.application.dto.rankDto.RankJsonResponse;
-import project.maru.application.dto.rankDto.RankUpdateRequest;
-import project.maru.application.service.RankService;
-=======
 import project.maru.application.dto.rankDto.RankJsonResponse;
 import project.maru.application.dto.rankDto.RankUpdateRequest;
 import project.maru.application.service.RankService;
 import project.maru.domain.QuestionsKr;
->>>>>>> Stashed changes
 import project.maru.presentation.util.ParseToken;
 
 @RestController
@@ -39,11 +32,8 @@ public class RankController {
   }
 
   @PutMapping("/update")
-<<<<<<< Updated upstream
-  public QuestionsKrUpdateRequest updateScore(@RequestHeader("Authorization") String accessToken,
-=======
+
   public QuestionsKr updateScore(@RequestHeader("Authorization") String accessToken,
->>>>>>> Stashed changes
       @RequestBody RankUpdateRequest rankUpdateRequest) throws Exception {
     String userId = parseToken.getParseToken(accessToken);
     return rankService.updateRank(userId, rankUpdateRequest);

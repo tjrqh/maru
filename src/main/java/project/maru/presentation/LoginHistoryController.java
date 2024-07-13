@@ -9,23 +9,19 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.filters.AddDefaultCharsetFilter.ResponseWrapper;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryCalendarResponse;
-import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryLoginCountRequest;
-import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryLoginCountResponse;
-import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryRequest;
-import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryResponse;
-import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryTodayCountResponse;
-import project.maru.application.dto.LoginHistoryDto.PostLoginRequest;
 import project.maru.application.dto.ResponseStatus;
 import project.maru.application.dto.SimpleApiResponse;
+import project.maru.application.dto.loginHistoryDto.GetLoginHistoryCalendarResponse;
+import project.maru.application.dto.loginHistoryDto.GetLoginHistoryLoginCountRequest;
+import project.maru.application.dto.loginHistoryDto.GetLoginHistoryLoginCountResponse;
+import project.maru.application.dto.loginHistoryDto.GetLoginHistoryRequest;
+import project.maru.application.dto.loginHistoryDto.GetLoginHistoryResponse;
+import project.maru.application.dto.loginHistoryDto.PostLoginRequest;
 import project.maru.application.service.LoginHistoryService;
 import project.maru.presentation.util.ParseToken;
 
@@ -78,7 +74,7 @@ public class LoginHistoryController {
 
   @Operation(summary = "오늘 로그인한 회원 수")
   @GetMapping("/total/today")
-  public GetLoginHistoryTodayCountResponse GetLoginCountsToday(
+  public project.maru.application.dto.loginHistoryDto.GetLoginHistoryTodayCountResponse GetLoginCountsToday(
       @RequestHeader(value = "Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken)
       throws Exception {
     return LoginHistoryService.findTodayLoginTotal();

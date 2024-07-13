@@ -1,26 +1,22 @@
 package project.maru.application.service;
 
-
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.YearMonth;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.asm.Advice.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryCalendarResponse;
-import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryLoginCountRequest;
-import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryLoginCountResponse;
-import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryRequest;
-import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryResponse;
-import project.maru.application.dto.LoginHistoryDto.GetLoginHistoryTodayCountResponse;
-import project.maru.application.dto.LoginHistoryDto.PostLoginRequest;
+import project.maru.application.dto.loginHistoryDto.GetLoginHistoryCalendarResponse;
+import project.maru.application.dto.loginHistoryDto.GetLoginHistoryLoginCountRequest;
+import project.maru.application.dto.loginHistoryDto.GetLoginHistoryLoginCountResponse;
+import project.maru.application.dto.loginHistoryDto.GetLoginHistoryRequest;
+import project.maru.application.dto.loginHistoryDto.GetLoginHistoryResponse;
+import project.maru.application.dto.loginHistoryDto.GetLoginHistoryTodayCountResponse;
+import project.maru.application.dto.loginHistoryDto.PostLoginRequest;
 import project.maru.domain.Rank;
 import project.maru.domain.UserLogInLogs;
 import project.maru.instructure.RankRepository;

@@ -4,17 +4,10 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-<<<<<<< Updated upstream
-import project.maru.application.dto.questionKrDto.QuestionsKrUpdateRequest;
-import project.maru.application.dto.rankDto.RankJsonResponse;
-import project.maru.application.dto.rankDto.RankReadResponse;
-import project.maru.application.dto.rankDto.RankUpdateRequest;
-=======
 import project.maru.application.dto.rankDto.RankJsonResponse;
 import project.maru.application.dto.rankDto.RankReadResponse;
 import project.maru.application.dto.rankDto.RankUpdateRequest;
 import project.maru.domain.QuestionsKr;
->>>>>>> Stashed changes
 import project.maru.domain.Rank;
 import project.maru.instructure.RankRepository;
 
@@ -26,8 +19,6 @@ public class RankService {
   private final RankRepository rankRepository;
   private final QuestionsKrService questionsKrService;
   private RankJsonResponse rankJsonResponse;
-
-  private final QuestionsKrService questionsKrService;
 
 
   public RankReadResponse findTotalScoreByUserId(String userId) {
@@ -64,30 +55,13 @@ public class RankService {
     return rankJsonResponse;
   }
 
-<<<<<<< Updated upstream
-  public QuestionsKrUpdateRequest updateRank(String accessToken,
-      RankUpdateRequest rankUpdateRequest) {
-    int totalScore =
-        rankRepository.findScoreByUserId(accessToken).getScore() + rankUpdateRequest.getScore();
-    Rank r = rankRepository.findScoreByUserId(accessToken);
-    r.setScore(totalScore);
 
-    int passed = rankUpdateRequest.getBeenCalled();
-    int questId = rankUpdateRequest.getQuestionKrId();
-    questionsKrService.putBeenPassed(questId, passed);
-
-    return questionsKrService.putBeenPassed(questId, passed);
-
-=======
   public QuestionsKr updateRank(String accessToken, RankUpdateRequest rankUpdateRequest) {
-    int totalScore =
-        rankUpdateRequest.getScore() + rankRepository.findScoreByUserId(accessToken).getScore();
     Rank r = rankRepository.findScoreByUserId(accessToken);
+    int totalScore = rankUpdateRequest.getScore() + r.getScore();
     r.setScore(totalScore);
     rankRepository.save(r);
-    System.out.println("krid : " + rankUpdateRequest.getQuestionKrId());
-    System.out.println("passed : " + rankUpdateRequest.isBeenPassed());
+
     return questionsKrService.putUpdatePassed(rankUpdateRequest);
->>>>>>> Stashed changes
   }
 }

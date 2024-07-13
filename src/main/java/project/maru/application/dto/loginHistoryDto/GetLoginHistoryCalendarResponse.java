@@ -1,4 +1,4 @@
-package project.maru.application.dto.LoginHistoryDto;
+package project.maru.application.dto.loginHistoryDto;
 
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;

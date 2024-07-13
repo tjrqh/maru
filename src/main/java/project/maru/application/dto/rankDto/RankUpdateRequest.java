@@ -15,8 +15,6 @@ import lombok.ToString;
 
 public class RankUpdateRequest {
 
-<<<<<<< Updated upstream
-=======
   private int score;
 
   @JsonProperty("question_kr_id")
@@ -24,10 +22,6 @@ public class RankUpdateRequest {
 
   @JsonProperty("been_passed")
   private boolean beenPassed;
->>>>>>> Stashed changes
 
-  private int score;
-  private int questionKrId;
-  private int beenCalled;
 
 }

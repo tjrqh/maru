@@ -1,4 +1,4 @@
-package project.maru.application.dto.LoginHistoryDto;
+package project.maru.application.dto.loginHistoryDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
