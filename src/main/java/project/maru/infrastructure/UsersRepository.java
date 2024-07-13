@@ -1,4 +1,4 @@
-package project.maru.instructure;
+package project.maru.infrastructure;
 
 import org.assertj.core.internal.Longs;
 import org.springframework.data.jpa.repository.JpaRepository;

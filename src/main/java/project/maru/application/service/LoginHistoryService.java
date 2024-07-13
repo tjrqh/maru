@@ -19,7 +19,7 @@ import project.maru.application.dto.loginHistoryDto.GetLoginHistoryTodayCountRes
 import project.maru.application.dto.loginHistoryDto.PostLoginRequest;
 import project.maru.domain.Rank;
 import project.maru.domain.UserLogInLogs;
-import project.maru.instructure.RankRepository;
+import project.maru.infrastructure.RankRepository;
 import project.maru.infrastructure.UserLoginLogsRepository;
 
 @Service

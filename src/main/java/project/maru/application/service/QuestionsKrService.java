@@ -6,7 +6,7 @@ import project.maru.application.dto.questionKrDto.GetQuestionCountResponse;
 import project.maru.application.dto.questionKrDto.QuestionsKrReadResponse;
 import project.maru.application.dto.rankDto.RankUpdateRequest;
 import project.maru.domain.QuestionsKr;
-import project.maru.instructure.QuestionsKrRepository;
+import project.maru.infrastructure.QuestionsKrRepository;
 
 @Service
 @RequiredArgsConstructor
