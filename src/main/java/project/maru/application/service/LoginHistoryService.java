@@ -20,7 +20,7 @@ import project.maru.application.dto.loginHistoryDto.PostLoginRequest;
 import project.maru.domain.Rank;
 import project.maru.domain.UserLogInLogs;
 import project.maru.instructure.RankRepository;
-import project.maru.instructure.UserLoginLogsRepository;
+import project.maru.infrastructure.UserLoginLogsRepository;
 
 @Service
 @RequiredArgsConstructor
