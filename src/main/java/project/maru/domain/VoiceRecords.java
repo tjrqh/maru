@@ -24,7 +24,7 @@ public class VoiceRecords {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-정  @Column(name = "user_id", unique = true)
+  @Column(name = "user_id", unique = true)
   private String userId;
   @Column(name = "question_kr_id")
   private int questionKrId;
