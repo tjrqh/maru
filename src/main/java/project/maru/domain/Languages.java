@@ -21,7 +21,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Languages {
+public class  Languages {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

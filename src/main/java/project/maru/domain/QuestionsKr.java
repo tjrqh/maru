@@ -28,7 +28,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class  QuestionsKr {
+public class QuestionsKr {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,12 +60,12 @@ public class  QuestionsKr {
   private List<VoiceRecords> voiceRecords;
 
 
-
   @PreRemove
   private void deleteLogical() {
     // 삭제 시간 설정
     this.deletedAt = LocalDateTime.now();
   }
+
   public QuestionsKr(String question, String answer, int score, Quotes quotes) {
     this.question = question;
     this.answer = answer;
@@ -77,5 +77,5 @@ public class  QuestionsKr {
     this.voiceRecords = voiceRecords;
 
 
-
+  }
 }

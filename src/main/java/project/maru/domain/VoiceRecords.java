@@ -1,5 +1,6 @@
 package project.maru.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +33,7 @@ public class VoiceRecords {
 
   @ManyToOne
   @JoinColumn(name = "questions_id")
+  @JsonIgnore
   private QuestionsKr questionsKr;
 
   @Column(name = "speech_to_text")
