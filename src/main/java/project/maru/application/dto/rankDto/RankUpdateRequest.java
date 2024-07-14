@@ -15,7 +15,6 @@ import lombok.ToString;
 
 public class RankUpdateRequest {
 
-  private int score;
 
   @JsonProperty("questions_id")
   private int questionKrId;
