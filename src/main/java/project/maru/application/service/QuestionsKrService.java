@@ -9,6 +9,7 @@ import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import project.maru.application.dto.questionKrDto.GetQuestionCountResponse;
+import project.maru.application.dto.questionKrDto.QuestionsKrJsonResponse;
 import project.maru.application.dto.questionKrDto.QuestionsKrReadResponse;
 import project.maru.application.dto.rankDto.RankUpdateRequest;
 import project.maru.domain.QuestionsKr;
@@ -21,6 +22,7 @@ public class QuestionsKrService {
 
   private final QuestionsKrRepository questionsKrRepository;
   private final QuotesRepository quotesRepository;
+  private QuestionsKrJsonResponse questionsKrJsonResponse;
 
   public QuestionsKr putUpdatePassed(RankUpdateRequest rankUpdateRequest) {
     QuestionsKr quest = questionsKrRepository.findById(rankUpdateRequest.getQuestionKrId());
@@ -36,7 +38,7 @@ public class QuestionsKrService {
   }
 
 
-  public List<QuestionsKrReadResponse> getRandomQuestionsByQuotesId(int contentTypeId, int count) {
+  public QuestionsKrJsonResponse getRandomQuestionsByQuotesId(int contentTypeId, int count) {
     List<Integer> shuffledList = new ArrayList<>(
         quotesRepository.findByContentTypeId(contentTypeId));
     Collections.shuffle(shuffledList);
@@ -48,7 +50,8 @@ public class QuestionsKrService {
     for (int i = 0; i < count && i < shuffledList.size(); i++) {
       randomValues.add(questionsKrRepository.findByQuotesId(shuffledList.get(i)));
     }
-    return randomValues;
+    questionsKrJsonResponse = new QuestionsKrJsonResponse(randomValues);
+    return questionsKrJsonResponse;
 }
 
   public GetQuestionCountResponse getQuestionTotalCount() {
