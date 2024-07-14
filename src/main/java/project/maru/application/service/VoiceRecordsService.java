@@ -25,7 +25,7 @@ public class VoiceRecordsService {
         throw new EntityNotFoundException("QuestionsKr not found");
     }
     VoiceRecords vRecords = new VoiceRecords(id, questionsKr,
-        vr.getSpeechToText(), vr.getMatchingRate());
+         vr.getVoiceRecords(),vr.getSpeechToText(),vr.getMatchingRate());
     return voiceRecordsRepository.save(vRecords);
   }
 }

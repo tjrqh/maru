@@ -22,6 +22,9 @@ public class VoiceRecordsCreateRequest {
   @JsonProperty("speech_to_text")
   private String speechToText;
 
+  @JsonProperty("voice_records")
+  private String voiceRecords;
+
   @JsonProperty("matching_rate")
   private int matchingRate;
 
