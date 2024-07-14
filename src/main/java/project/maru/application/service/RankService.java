@@ -58,7 +58,7 @@ public class RankService {
   public QuestionsKr updateRank(String accessToken, RankUpdateRequest rankUpdateRequest) {
     Rank r = rankRepository.findScoreByUserId(accessToken);
     //issue.
-    int totalScore = rankUpdateRequest.getScore() + r.getScore();
+    int totalScore = 100 + r.getScore();
     r.setScore(totalScore);
     rankRepository.save(r);
 

@@ -77,5 +77,5 @@ public class QuestionsKr {
     this.voiceRecords = voiceRecords;
   }
 
-  }
 }
+
