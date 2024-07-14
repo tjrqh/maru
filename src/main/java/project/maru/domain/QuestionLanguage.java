@@ -1,5 +1,6 @@
 package project.maru.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,11 +39,12 @@ public class QuestionLanguage {
 
   @ManyToOne
   @JoinColumn(name = "languages_id")
+  @JsonIgnore
   private Languages languages;
 
   @ManyToOne
   @JoinColumn(name = "questions_id")
-
+  @JsonIgnore
   private QuestionsKr questionsKr;
 
   @PreRemove

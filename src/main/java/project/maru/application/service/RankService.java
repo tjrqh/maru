@@ -53,6 +53,8 @@ public class RankService {
   }
 
 
+
+  //Issue : 음성에 대한 정답 시 음성 저장과 점수 데이터를 같이 주는지?
   public QuestionsKr updateRank(String accessToken, RankUpdateRequest rankUpdateRequest) {
     Rank r = rankRepository.findScoreByUserId(accessToken);
     //issue.

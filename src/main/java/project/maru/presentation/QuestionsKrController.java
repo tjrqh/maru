@@ -1,5 +1,6 @@
 package project.maru.presentation;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +18,9 @@ public class QuestionsKrController {
   private final QuestionsKrService questionsKrService;
 
   @GetMapping("/questions")
-  public QuestionsKrReadResponse getQuestionsKr(@RequestParam int contentTypeId,
+  public  List<QuestionsKrReadResponse> getQuestionsKr(@RequestParam(name = "content_type") int contentTypeId,
       @RequestParam int n) {
-    return questionsKrService.getQuestionsKrService(contentTypeId, n);
+    return questionsKrService.getRandomQuestionsByQuotesId(contentTypeId, n);
   }
 
   @GetMapping("/questions/total-count")

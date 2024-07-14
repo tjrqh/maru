@@ -1,5 +1,6 @@
 package project.maru.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,6 +42,7 @@ public class Quotes {
 
   @ManyToOne
   @JoinColumn(name = "content_type_id")
+  @JsonIgnore
   private ContentType contentType;
 
   @OneToMany(mappedBy = "quotes")
