@@ -1,7 +1,6 @@
 package project.maru.application.service;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.stereotype.Service;
 import project.maru.application.dto.questionKrDto.GetQuestionCountResponse;
 import project.maru.application.dto.questionKrDto.QuestionsKrReadResponse;
@@ -18,17 +17,18 @@ public class QuestionsKrService {
   public QuestionsKr putUpdatePassed(RankUpdateRequest rankUpdateRequest) {
     QuestionsKr quest = questionsKrRepository.findById(rankUpdateRequest.getQuestionKrId());
     int totalPassed = quest.getBeenPassed();
+
     if (rankUpdateRequest.isBeenPassed()) {
       totalPassed += 1;
     }
+
     quest.setBeenPassed(totalPassed);
 
     return questionsKrRepository.save(quest);
   }
 
   public QuestionsKrReadResponse getQuestionsKrService(int contentTypeId, int n) {
-    return questionsKrRepository.findByQuotesId(contentTypeId);
-
+    return questionsKrRepository.findRandomQuestions(contentTypeId ,n);
   }
 
   public GetQuestionCountResponse getQuestionTotalCount() {

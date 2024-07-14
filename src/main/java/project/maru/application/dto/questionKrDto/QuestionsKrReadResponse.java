@@ -11,9 +11,11 @@ import lombok.Setter;
 @AllArgsConstructor
 public class QuestionsKrReadResponse {
 
+  private int id;
+  private int contentTypeId;
   private String question;
+  private String quest_lang;
   private String answer;
-  private int score;
-  private int quotes;
+
 
 }
