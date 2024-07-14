@@ -36,6 +36,9 @@ public class VoiceRecords {
   @JsonIgnore
   private QuestionsKr questionsKr;
 
+  @Column(name = "voice_records")
+  private String recordsVoice;
+
   @Column(name = "speech_to_text")
   private String speechToText;
   @Column(name = "matching_rate")
@@ -57,6 +60,15 @@ public class VoiceRecords {
   private void deleteLogical() {
     // 삭제 시간 설정
     this.deletedAt = LocalDateTime.now();
+  }
+
+  public VoiceRecords(String userId, QuestionsKr questionsKr, String recordsVoice,
+      String speechToText, int matchingRate) {
+    this.userId = userId;
+    this.questionsKr = questionsKr;
+    this.recordsVoice = recordsVoice;
+    this.speechToText = speechToText;
+    this.matchingRate = matchingRate;
   }
 
   public VoiceRecords(String userId, QuestionsKr questionsKr, String speechToText,
