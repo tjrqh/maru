@@ -5,6 +5,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 
 import io.swagger.v3.oas.models.security.SecurityScheme;
 
+import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -24,10 +25,13 @@ public class SwaggerConfig {
         .scheme("bearer")
         .bearerFormat("JWT")
     );
+
+    Server server = new Server().url("https://kmaru.shop");
     return new OpenAPI()
         .components(new Components())
         .info(apiInfo())
         .addSecurityItem(securityRequirement)
+        .addServersItem(server)
         .components(components);
   }
   private io.swagger.v3.oas.models.info.Info apiInfo() {
