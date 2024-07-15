@@ -16,11 +16,13 @@ import lombok.ToString;
 public class RankUpdateRequest {
 
 
-  @JsonProperty("questions_id")
+  @JsonProperty("questionId")
   private int questionKrId;
 
-  @JsonProperty("been_passed")
+  @JsonProperty("isCorrect")
   private boolean beenPassed;
-
+  @JsonProperty("userVoice")
+  private String voiceRecords;
+  private String userName;
 
 }

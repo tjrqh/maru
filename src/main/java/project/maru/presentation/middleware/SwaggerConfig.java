@@ -26,12 +26,12 @@ public class SwaggerConfig {
         .bearerFormat("JWT")
     );
 
-    Server server = new Server().url("https://kmaru.shop");
+    //Server server = new Server().url("https://kmaru.shop");
     return new OpenAPI()
         .components(new Components())
         .info(apiInfo())
         .addSecurityItem(securityRequirement)
-        .addServersItem(server)
+        //.addServersItem(server)
         .components(components);
   }
   private io.swagger.v3.oas.models.info.Info apiInfo() {

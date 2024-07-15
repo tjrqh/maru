@@ -2,14 +2,19 @@ package project.maru.application.service;
 
 import java.util.List;
 import java.util.Optional;
+import jdk.jshell.Snippet.Status;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import project.maru.application.dto.rankDto.RankJsonResponse;
 import project.maru.application.dto.rankDto.RankReadResponse;
 import project.maru.application.dto.rankDto.RankUpdateRequest;
+import project.maru.application.dto.voiceRecordsDto.VoiceRecordsCreateRequest;
 import project.maru.domain.QuestionsKr;
 import project.maru.domain.Rank;
+import project.maru.domain.VoiceRecords;
+import project.maru.infrastructure.QuestionsKrRepository;
 import project.maru.infrastructure.RankRepository;
+import project.maru.infrastructure.VoiceRecordsRepository;
 
 
 @Service
@@ -18,6 +23,7 @@ public class RankService {
 
   private final RankRepository rankRepository;
   private final QuestionsKrService questionsKrService;
+  private final VoiceRecordsService voiceRecordsService;
   private RankJsonResponse rankJsonResponse;
 
 
@@ -54,17 +60,18 @@ public class RankService {
   }
 
 
-
   //Issue : 음성에 대한 정답 시 음성 저장과 점수 데이터를 같이 주는지?
-  public QuestionsKr updateRank(String accessToken, RankUpdateRequest rankUpdateRequest) {
-    Rank r = rankRepository.findScoreByUserId(accessToken);
+  public VoiceRecords updateRank(String accessToken, RankUpdateRequest rankUpdateRequest) {
+    if (rankUpdateRequest.isBeenPassed()) {
+      Rank r = rankRepository.findScoreByUserId(accessToken);
+      int addScore = 100;
+      int totalScore = addScore + r.getScore();
 
-    int addScore = 100;
-    int totalScore = addScore + r.getScore();
+      r.setScore(totalScore);
+      rankRepository.save(r);
 
-    r.setScore(totalScore);
-    rankRepository.save(r);
-
-    return questionsKrService.putUpdatePassed(rankUpdateRequest);
+      questionsKrService.putUpdatePassed(rankUpdateRequest);
+    }
+    return voiceRecordsService.voiceRecordsLinkCreate(accessToken, rankUpdateRequest);
   }
 }
