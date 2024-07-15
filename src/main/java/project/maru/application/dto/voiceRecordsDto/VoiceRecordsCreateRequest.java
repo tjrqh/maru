@@ -28,4 +28,9 @@ public class VoiceRecordsCreateRequest {
   @JsonProperty("matching_rate")
   private int matchingRate;
 
+  public VoiceRecordsCreateRequest(String userId, int questionsKrId, String voiceRecords) {
+    this.userId = userId;
+    this.questionsKrId = questionsKrId;
+    this.voiceRecords = voiceRecords;
+  }
 }

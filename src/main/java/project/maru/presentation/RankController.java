@@ -13,6 +13,7 @@ import project.maru.application.dto.rankDto.RankJsonResponse;
 import project.maru.application.dto.rankDto.RankUpdateRequest;
 import project.maru.application.service.RankService;
 import project.maru.domain.QuestionsKr;
+import project.maru.domain.VoiceRecords;
 import project.maru.presentation.util.ParseToken;
 
 @RestController
@@ -26,15 +27,15 @@ public class RankController {
 
   @GetMapping("/rankings")
   public RankJsonResponse getScore(@RequestHeader("Authorization") String accessToken,
-      @RequestParam int limit, @RequestParam boolean includeUser)
+      @RequestParam int limit, @RequestParam boolean userInfoIncluded)
       throws Exception {
     String userId = parseToken.getParseToken(accessToken);
-    return rankService.getMyScoreAndTop20Rank(userId, limit, includeUser);
+    return rankService.getMyScoreAndTop20Rank(userId, limit, userInfoIncluded);
   }
 
   @PutMapping("/answer")
 
-  public QuestionsKr updateScore(@RequestHeader("Authorization") String accessToken,
+  public VoiceRecords updateScore(@RequestHeader("Authorization") String accessToken,
       @RequestBody RankUpdateRequest rankUpdateRequest) throws Exception {
     String userId = parseToken.getParseToken(accessToken);
     return rankService.updateRank(userId, rankUpdateRequest);

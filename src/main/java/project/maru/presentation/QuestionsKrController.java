@@ -19,7 +19,7 @@ public class QuestionsKrController {
   private final QuestionsKrService questionsKrService;
 
   @GetMapping("/questions")
-  public QuestionsKrJsonResponse getQuestionsKr(@RequestParam(name = "content_type") int contentTypeId,
+  public QuestionsKrJsonResponse getQuestionsKr(@RequestParam int contentTypeId,
       @RequestParam int n) {
     return questionsKrService.getRandomQuestionsByQuotesId(contentTypeId, n);
   }
