@@ -12,7 +12,7 @@ import project.maru.application.dto.questionKrDto.QuestionsKrReadResponse;
 import project.maru.application.service.QuestionsKrService;
 
 @RestController
-@RequestMapping("/api/learning")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class QuestionsKrController {
 
@@ -24,7 +24,7 @@ public class QuestionsKrController {
     return questionsKrService.getRandomQuestionsByQuotesId(contentTypeId, n);
   }
 
-  @GetMapping("/questions/total-count")
+  @GetMapping("/total-questions")
   public GetQuestionCountResponse getQuestionTotalCount() {
     return questionsKrService.getQuestionTotalCount();
   }
