@@ -16,10 +16,10 @@ public class WebConf implements WebMvcConfigurer {
   @Override
   public void addCorsMappings(CorsRegistry registry) {
     registry.addMapping("/**")
-        .allowedOrigins(ALLOW_DOMAIN,TEST_DOMAIN,"http://127.0.0.1:3000")
+        .allowedOrigins("*")
         .allowedMethods("GET", "POST", "PUT", "DELETE")
         .allowedHeaders("Authorization", "Content-Type")
-        .allowCredentials(true)
+        //.allowCredentials(true)
         .maxAge(3600);
   }
 }
