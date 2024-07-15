@@ -35,6 +35,7 @@ public class RankService {
     return rankRepository.findTopSubScores(quantity);
   }
 
+  //랭킹 전체 조회(내 점수 포함/미포함 지정)
   public RankJsonResponse getMyScoreAndTop20Rank(String userId, int limit,
       boolean includeUser) {
 
@@ -57,7 +58,10 @@ public class RankService {
   //Issue : 음성에 대한 정답 시 음성 저장과 점수 데이터를 같이 주는지?
   public QuestionsKr updateRank(String accessToken, RankUpdateRequest rankUpdateRequest) {
     Rank r = rankRepository.findScoreByUserId(accessToken);
-    int totalScore = 100 + r.getScore();
+
+    int addScore = 100;
+    int totalScore = addScore + r.getScore();
+
     r.setScore(totalScore);
     rankRepository.save(r);
 

@@ -54,9 +54,11 @@ public class QuestionsKr {
 
 
   @OneToMany(mappedBy = "questionsKr")
+  @JsonIgnore
   private List<QuestionLanguage> questionLanguages;
 
   @OneToMany(mappedBy = "questionsKr")
+  @JsonIgnore
   private List<VoiceRecords> voiceRecords;
 
 

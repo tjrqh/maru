@@ -32,6 +32,7 @@ public class Quotes {
   private String title;
 
   private String quoteVoiceLink;
+  private String quote;
 
   @Column(updatable = false)
   @CreationTimestamp
