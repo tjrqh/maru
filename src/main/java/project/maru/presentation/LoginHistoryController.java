@@ -27,7 +27,7 @@ import project.maru.presentation.util.ParseToken;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/login-history")
+@RequestMapping("/api")
 public class LoginHistoryController {
 
   private final LoginHistoryService LoginHistoryService;
@@ -80,7 +80,7 @@ public class LoginHistoryController {
     return LoginHistoryService.findTodayLoginTotal();
   }
 
-  @GetMapping("/calendar")
+  @GetMapping("/attendance")
   @Operation(summary = "이번달 로그인 이력 조회")
   public List<GetLoginHistoryCalendarResponse> GetLoginCalendar(
       @RequestHeader(value = "Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken)

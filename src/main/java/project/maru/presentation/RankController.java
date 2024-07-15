@@ -32,7 +32,7 @@ public class RankController {
     return rankService.getMyScoreAndTop20Rank(userId, limit, includeUser);
   }
 
-  @PutMapping("/update")
+  @PutMapping("/answer")
 
   public QuestionsKr updateScore(@RequestHeader("Authorization") String accessToken,
       @RequestBody RankUpdateRequest rankUpdateRequest) throws Exception {
