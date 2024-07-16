@@ -32,7 +32,7 @@ public class VoiceRecords {
   private String userId;
 
   @ManyToOne
-  @JoinColumn(name = "questions_id")
+  @JoinColumn(name = "questions_kr_id")
   @JsonIgnore
   private QuestionsKr questionsKr;
 

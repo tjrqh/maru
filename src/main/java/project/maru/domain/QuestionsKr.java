@@ -22,7 +22,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name = "questions")
+@Table(name = "questions_kr")
 @Getter
 @Setter
 @Builder
@@ -48,7 +48,7 @@ public class QuestionsKr {
   private LocalDateTime deletedAt;
 
   @ManyToOne
-  @JoinColumn(name = "quotes_id")
+  @JoinColumn(name = "quote_id")
   @JsonIgnore
   private Quotes quotes;
 

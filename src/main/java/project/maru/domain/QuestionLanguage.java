@@ -18,7 +18,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name = "question_lang")
+@Table(name = "questions_lang")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -38,12 +38,12 @@ public class QuestionLanguage {
   private LocalDateTime deletedAt;
 
   @ManyToOne
-  @JoinColumn(name = "languages_id")
+  @JoinColumn(name = "lang_code")
   @JsonIgnore
   private Languages languages;
 
   @ManyToOne
-  @JoinColumn(name = "questions_id")
+  @JoinColumn(name = "questions_kr_id")
   @JsonIgnore
   private QuestionsKr questionsKr;
 
