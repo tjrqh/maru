@@ -30,5 +30,5 @@ springdoc:
 cors-allow-domain:
   front-end: ${FRONT_DOMAIN}
   test-end: ${TEST_DOMAIN}
-
+  alb-end: ${ALB_DOMAIN}
 
