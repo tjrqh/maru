@@ -1,8 +1,12 @@
 package project.maru.presentation;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -26,15 +30,15 @@ public class RankController {
 
 
   @GetMapping("/rankings")
-  public RankJsonResponse getScore(@RequestHeader("Authorization") String accessToken,
+  public RankJsonResponse getScore(
+      @RequestHeader("Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken,
       @RequestParam int limit, @RequestParam boolean userInfoIncluded)
       throws Exception {
     String userId = parseToken.getParseToken(accessToken);
     return rankService.getMyScoreAndTop20Rank(userId, limit, userInfoIncluded);
   }
 
-  @PutMapping("/answer")
-
+  @PostMapping("/answer")
   public VoiceRecords updateScore(@RequestHeader("Authorization") String accessToken,
       @RequestBody RankUpdateRequest rankUpdateRequest) throws Exception {
     String userId = parseToken.getParseToken(accessToken);

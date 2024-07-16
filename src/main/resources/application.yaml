@@ -14,11 +14,8 @@ spring:
     database-platform: org.hibernate.dialect.MariaDBDialect
 
 springdoc:
-  api-docs:
-    enabled: true
-    path: /api-docs
   swagger-ui:
-    path: /swagger-ui-custom.html
+    path: /docs
     groups-order: DESC
     doc-expansion: none
     tags-sorter: alpha

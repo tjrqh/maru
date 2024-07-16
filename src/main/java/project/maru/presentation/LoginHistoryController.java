@@ -7,10 +7,12 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,7 +45,7 @@ public class LoginHistoryController {
     return LoginHistoryService.findUserLoginHistory(getLoginHistoryRequest);
   }
 
-  @PostMapping("")
+  @PostMapping("user-info")
   @Operation(summary = "로그인 기록 추가", responses = {
       @ApiResponse(responseCode = "201", description = "successfully",
           content = @Content(mediaType = "application/json",
@@ -51,8 +53,10 @@ public class LoginHistoryController {
   })
   @Schema(example = "{\"status\":\"success\", \"message\":\"userId logged in!\", \"data\":null}")
   public SimpleApiResponse<?> PostLoginHistory(
-      @RequestHeader(value = "Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken,
-      PostLoginRequest postLoginRequest) throws Exception {
+      @RequestHeader(value = "Authorization")
+      @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true))
+      String accessToken,
+      @RequestBody PostLoginRequest postLoginRequest) throws Exception {
     String userId = parseToken.getParseToken(accessToken);
     postLoginRequest.setUserId(userId);
     LoginHistoryService.insertUserLoginHistory(postLoginRequest);
@@ -82,7 +86,7 @@ public class LoginHistoryController {
 
   @GetMapping("/attendance")
   @Operation(summary = "이번달 로그인 이력 조회")
-  public List<GetLoginHistoryCalendarResponse> GetLoginCalendar(
+  public List<LocalDate> GetLoginCalendar(
       @RequestHeader(value = "Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken)
       throws Exception {
     String userId = parseToken.getParseToken(accessToken);

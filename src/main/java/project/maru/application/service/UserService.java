@@ -11,8 +11,8 @@ public class UserService {
 
   private final UsersRepository usersRepository;
 
-  public UserTotalCountResponse findTotalUserCount() {
-    return UserTotalCountResponse.builder().userTotalCount(usersRepository.count()).build();
+  public long findTotalUserCount() {
+    return usersRepository.count();
   }
 
 }
