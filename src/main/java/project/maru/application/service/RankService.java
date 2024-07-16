@@ -20,7 +20,6 @@ public class RankService {
   private final RankRepository rankRepository;
   private final QuestionsKrService questionsKrService;
   private final VoiceRecordsService voiceRecordsService;
-  private RankJsonResponse rankJsonResponse;
 
 
   public RankReadResponse findTotalScoreByUserId(String userId) {
@@ -40,6 +39,7 @@ public class RankService {
   //랭킹 전체 조회(내 점수 포함/미포함 지정)
   public RankJsonResponse getMyScoreAndTop20Rank(String userId, int limit,
       boolean includeUser) {
+    RankJsonResponse rankJsonResponse;
 
     List<RankReadResponse> topRankLimitByScore = getTopRankLimitByScore(limit);
     for (int i = 0; i < topRankLimitByScore.size(); i++) {
