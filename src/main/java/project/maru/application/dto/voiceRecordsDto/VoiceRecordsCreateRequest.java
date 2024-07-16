@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
-import project.maru.domain.QuestionsKr;
 
 @NoArgsConstructor
 @Getter
