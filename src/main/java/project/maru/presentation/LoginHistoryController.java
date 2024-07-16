@@ -76,7 +76,7 @@ public class LoginHistoryController {
 
   @Operation(summary = "오늘 로그인한 회원 수 GET")
   @GetMapping("/users/today-login-count")
-  public int GetLoginCountsToday(
+  public Number GetLoginCountsToday(
       @RequestHeader(value = "Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken)
       throws Exception {
     return LoginHistoryService.findTodayLoginTotal();
