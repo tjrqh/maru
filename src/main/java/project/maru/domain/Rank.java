@@ -27,7 +27,7 @@ public class Rank {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
-  @Column(name="user_id",unique = true)
+  @Column(name = "user_id", unique = true)
   private String userId;
   private int score;
 
@@ -38,8 +38,9 @@ public class Rank {
   private LocalDateTime updatedAt;
 
   @Builder
-  public Rank(String userId,String name, int score) {
+  public Rank(String userId, String name, int score) {
     this.userId = userId;
+    this.name = name;
     this.score = score;
   }
 
