@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,8 +53,20 @@ public class LoginHistoryService {
 
   @Transactional
   public void insertUserLoginHistory(PostLoginRequest postLoginRequest) {
-    UserLogInLogs userLogInLogs = new UserLogInLogs(postLoginRequest.getUserId());
-    userLoginLogsRepository.save(userLogInLogs);
+    String userId = postLoginRequest.getUserId();
+    LocalDate now = LocalDate.now().withDayOfMonth(1);
+    Timestamp startDate = Timestamp.valueOf(
+        now.atStartOfDay());
+    Timestamp endDate = Timestamp.valueOf(
+        YearMonth.from(now).atEndOfMonth().atTime(LocalTime.MAX));
+    Integer results = userLoginLogsRepository.findByUserIdAndStartDateAndEndDateCount(
+        userId, startDate, endDate);
+
+    if (results == null || results == 0) {
+      UserLogInLogs userLogInLogs = new UserLogInLogs(userId);
+      userLoginLogsRepository.save(userLogInLogs);
+    }
+
     Rank r = rankRepository.findScoreByUserId(postLoginRequest.getUserId());
     if (r == null) {
       r = Rank.builder().userId(postLoginRequest.getUserId()).name(postLoginRequest.getName())
@@ -70,20 +83,26 @@ public class LoginHistoryService {
         now.atStartOfDay());
     Timestamp endDate = Timestamp.valueOf(
         YearMonth.from(now).atEndOfMonth().atTime(LocalTime.MAX));
-    List<LocalDate> results = userLoginLogsRepository.countLoginByDay(userId, startDate, endDate);
 
-    return results;
+    List<String> dateStrings = userLoginLogsRepository.countLoginByDay(userId, startDate, endDate);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    return dateStrings.stream()
+        .map(dateStr -> LocalDate.parse(dateStr, formatter))
+        .collect(Collectors.toList());
+
   }
 
-  public GetLoginHistoryTodayCountResponse findTodayLoginTotal() {
+  public int findTodayLoginTotal() {
     LocalDate now = LocalDate.now();
     Timestamp startDate = Timestamp.valueOf(
         now.atStartOfDay());
     Timestamp endDate = Timestamp.valueOf(
         now.atTime(LocalTime.MAX));
     Integer count = userLoginLogsRepository.countLoginUsers(startDate, endDate);
-
-    return GetLoginHistoryTodayCountResponse.builder().todayLoginUsers(count).build();
+    if (count == null) {
+      count = 0;
+    }
+    return count;
 
   }
 
