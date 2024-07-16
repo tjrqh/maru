@@ -49,7 +49,7 @@ public class LoginHistoryController {
   @Operation(summary = "유저 로그인 기록 로그 POST", responses = {
       @ApiResponse(responseCode = "201", description = "successfully",
           content = @Content(mediaType = "application/json",
-              schema = @Schema(implementation = SimpleApiResponse.class)))
+              schema = @Schema(implementation = PostUserInfoResponse.class)))
   })
 //  @Schema(example = "{\"status\":\"success\", \"message\":\"userId logged in!\", \"data\":null}")
   public PostUserInfoResponse PostLoginHistory(
