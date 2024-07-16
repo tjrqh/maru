@@ -1,6 +1,7 @@
-package project.maru.application.dto.RankDto;
+package project.maru.application.dto.loginHistoryDto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,9 +10,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class RankCreateRequest {
+@Builder
+public class GetLoginHistoryTodayCountResponse {
 
-  private String userId;
-  private int score;
-
+  int todayLoginUsers;
 }

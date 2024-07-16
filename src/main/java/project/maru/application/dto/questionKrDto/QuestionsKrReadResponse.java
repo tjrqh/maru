@@ -1,5 +1,6 @@
-package project.maru.application.dto.QuestionKrDto;
+package project.maru.application.dto.questionKrDto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,9 +12,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class QuestionsKrReadResponse {
 
+  private int id;
+  @JsonProperty("korean")
   private String question;
+  @JsonProperty("english")
+  private String questLang;
   private String answer;
-  private int score;
-  private int contentTypeId;
-
 }

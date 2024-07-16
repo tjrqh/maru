@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,8 +25,9 @@ public class Rank {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
-  private String eMail;
+  private Long id;
+  private String name;
+  @Column(name="user_id",unique = true)
   private String userId;
   private int score;
 
@@ -34,4 +36,25 @@ public class Rank {
   private LocalDateTime createdAt;
   @UpdateTimestamp
   private LocalDateTime updatedAt;
+
+  @Builder
+  public Rank(String userId,String name, int score) {
+    this.userId = userId;
+    this.score = score;
+  }
+
+  public Rank(String userId, int score) {
+    this.userId = userId;
+    this.score = score;
+  }
+
+  public Rank(Long id, String name, String userId, int score) {
+    this.id = id;
+    this.name = name;
+    this.userId = userId;
+    this.score = score;
+  }
+
+  public Rank(Long id, String userId, int score, String name) {
+  }
 }

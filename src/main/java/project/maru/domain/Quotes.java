@@ -1,13 +1,18 @@
 package project.maru.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,9 +30,9 @@ public class Quotes {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   private String title;
-  private String quote;
+
   private String quoteVoiceLink;
-  private int contentTypeId;
+  private String quote;
 
   @Column(updatable = false)
   @CreationTimestamp
@@ -35,6 +40,14 @@ public class Quotes {
   @UpdateTimestamp
   private LocalDateTime updatedAt;
   private LocalDateTime deletedAt;
+
+  @ManyToOne
+  @JoinColumn(name = "content_type_id")
+  @JsonIgnore
+  private ContentType contentType;
+
+  @OneToMany(mappedBy = "quotes")
+  private List<QuestionsKr> questionsKrs;
 
   @PreRemove
   private void deleteLogical() {
