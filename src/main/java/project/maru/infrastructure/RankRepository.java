@@ -31,13 +31,13 @@ public interface RankRepository extends JpaRepository<Rank, Long> {
 
   @Query(value = "SELECT ranking FROM (" +
       "    SELECT user_id, " +
-      "           RANK() OVER (ORDER BY score DESC) as ranking " +
+      "           RANK() OVER (ORDER BY score DESC,updated_at ASC) as ranking " +
       "    FROM user_scores" +
       ") ranked " +
       "WHERE user_id = :userId", nativeQuery = true)
   Integer findRankingByUserId(@Param("userId") String userId);
 
-  @Query(value = "SELECT new project.maru.application.dto.rankDto.RankReadResponse(r.name, r.score) FROM Rank r ORDER BY r.score DESC LIMIT :quantity")
+  @Query(value = "SELECT new project.maru.application.dto.rankDto.RankReadResponse(r.name, r.score) FROM Rank r ORDER BY r.score DESC, r.updatedAt asc LIMIT :quantity")
   List<RankReadResponse> findTopSubScores(@Param("quantity") int quantity);
 
 
