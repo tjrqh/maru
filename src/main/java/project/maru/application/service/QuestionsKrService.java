@@ -38,7 +38,7 @@ public class QuestionsKrService {
   }
 
 
-  public QuestionsKrJsonResponse getRandomQuestionsByQuotesId(int contentTypeId, int count) {
+  public List<QuestionsKrReadResponse> getRandomQuestionsByQuotesId(int contentTypeId, int count) {
     List<Integer> shuffledList = new ArrayList<>(
         quotesRepository.findByContentTypeId(contentTypeId));
     Collections.shuffle(shuffledList);
@@ -51,11 +51,10 @@ public class QuestionsKrService {
       randomValues.add(questionsKrRepository.findByQuotesId(shuffledList.get(i)));
     }
     questionsKrJsonResponse = new QuestionsKrJsonResponse(randomValues);
-    return questionsKrJsonResponse;
-}
+    return questionsKrJsonResponse.getQuestions();
+  }
 
-  public GetQuestionCountResponse getQuestionTotalCount() {
-    return GetQuestionCountResponse.builder()
-        .QuestionTotalCounts(questionsKrRepository.countByDeletedAtIsNull()).build();
+  public long getQuestionTotalCount() {
+    return questionsKrRepository.countByDeletedAtIsNull();
   }
 }

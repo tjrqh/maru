@@ -1,5 +1,6 @@
 package project.maru.presentation;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -25,6 +26,7 @@ public class VoiceRecordsController {
 
 
   @PostMapping("/uploads")
+  @Operation(deprecated = true)
   public VoiceRecords postVoiceRecords(
       @RequestHeader("Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken,
       @RequestBody VoiceRecordsCreateRequest voiceRecordsCreateRequest) throws Exception {

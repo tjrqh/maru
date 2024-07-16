@@ -11,12 +11,12 @@ import project.maru.domain.UserLogInLogs;
 
 public interface UserLoginLogsRepository extends JpaRepository<UserLogInLogs, Long> {
 
-  @Query("SELECT DATE_FORMAT(lh.createdAt, '%Y-%m-01'), COUNT(lh) FROM UserLogInLogs lh WHERE lh.userId = :userId AND lh.createdAt BETWEEN :startDate AND :endDate GROUP BY DATE_FORMAT(lh.createdAt, '%Y-%m-01')")
+  @Query("SELECT DATE_FORMAT(lh.createdAt, '%Y-%m-01') FROM UserLogInLogs lh WHERE lh.userId = :userId AND lh.createdAt BETWEEN :startDate AND :endDate GROUP BY DATE_FORMAT(lh.createdAt, '%Y-%m-01')")
   List<Object[]> countLoginByMonth(@Param("userId") String userId,
       @Param("startDate") Timestamp startDate, @Param("endDate") Timestamp endDate);
 
-  @Query("SELECT DATE_FORMAT(lh.createdAt, '%Y-%m-%d'), COUNT(lh) FROM UserLogInLogs lh WHERE lh.userId = :userId AND lh.createdAt BETWEEN :startDate AND :endDate GROUP BY DATE_FORMAT(lh.createdAt, '%Y-%m-%d') ORDER BY lh.createdAt ASC")
-  List<Object[]> countLoginByDay(@Param("userId") String userId,
+  @Query("SELECT DATE_FORMAT(lh.createdAt, '%Y-%m-%d') FROM UserLogInLogs lh WHERE lh.userId = :userId AND lh.createdAt BETWEEN :startDate AND :endDate GROUP BY DATE_FORMAT(lh.createdAt, '%Y-%m-%d') ORDER BY lh.createdAt ASC")
+  List<LocalDate> countLoginByDay(@Param("userId") String userId,
       @Param("startDate") Timestamp startDate, @Param("endDate") Timestamp endDate);
 
   @Query("SELECT lh FROM UserLogInLogs lh WHERE lh.userId = :userId AND lh.createdAt BETWEEN :startDate AND :endDate")

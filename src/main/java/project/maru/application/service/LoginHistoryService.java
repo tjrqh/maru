@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.asm.Advice.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.maru.application.dto.loginHistoryDto.GetLoginHistoryCalendarResponse;
@@ -63,20 +64,15 @@ public class LoginHistoryService {
     rankRepository.save(r);
   }
 
-  public List<GetLoginHistoryCalendarResponse> findUserLoginCalendar(String userId) {
+  public List<LocalDate> findUserLoginCalendar(String userId) {
     LocalDate now = LocalDate.now().withDayOfMonth(1);
     Timestamp startDate = Timestamp.valueOf(
         now.atStartOfDay());
     Timestamp endDate = Timestamp.valueOf(
         YearMonth.from(now).atEndOfMonth().atTime(LocalTime.MAX));
-    List<Object[]> results = userLoginLogsRepository.countLoginByDay(userId, startDate, endDate);
+    List<LocalDate> results = userLoginLogsRepository.countLoginByDay(userId, startDate, endDate);
 
-    return results.stream()
-        .map(row -> GetLoginHistoryCalendarResponse.builder()
-            .date(LocalDate.parse((CharSequence) row[0]))
-            .userId(userId).build())
-        .collect(Collectors.toList());
-
+    return results;
   }
 
   public GetLoginHistoryTodayCountResponse findTodayLoginTotal() {
@@ -112,14 +108,8 @@ public class LoginHistoryService {
     List<GetLoginHistoryLoginCountResponse> list = new ArrayList<>();
     List<Object[]> results;
 
-    if ("month".equals(getLoginHistoryLoginCountRequest.getType())) {
-      // 월별 로그인 횟수 조회
-      results = userLoginLogsRepository.countLoginByMonth(userId, startDate, endDate);
-    } else {
-      // 기본적으로 일별 로그인 횟수 조회
-      results = userLoginLogsRepository.countLoginByDay(userId, startDate,
-          endDate);
-    }
+    // 월별 로그인 횟수 조회
+    results = userLoginLogsRepository.countLoginByMonth(userId, startDate, endDate);
 
     return results.stream()
         .map(row -> GetLoginHistoryLoginCountResponse.builder()
