@@ -1,9 +1,13 @@
 package project.maru.application.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Optional;
 import jdk.jshell.Snippet.Status;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import project.maru.application.dto.rankDto.RankJsonResponse;
 import project.maru.application.dto.rankDto.RankReadResponse;
@@ -61,7 +65,11 @@ public class RankService {
 
 
   //Issue : 음성에 대한 정답 시 음성 저장과 점수 데이터를 같이 주는지?
-  public VoiceRecords updateRank(String accessToken, RankUpdateRequest rankUpdateRequest) {
+  public ObjectNode updateRank(String accessToken, RankUpdateRequest rankUpdateRequest) {
+    ObjectMapper mapper = new ObjectMapper();
+    ObjectNode jsonResponse = mapper.createObjectNode();
+
+    try {
     if (rankUpdateRequest.isBeenPassed()) {
       Rank r = rankRepository.findScoreByUserId(accessToken);
       int addScore = 100;
@@ -71,7 +79,15 @@ public class RankService {
       rankRepository.save(r);
 
       questionsKrService.putUpdatePassed(rankUpdateRequest);
+      voiceRecordsService.voiceRecordsLinkCreate(accessToken, rankUpdateRequest);
     }
-    return voiceRecordsService.voiceRecordsLinkCreate(accessToken, rankUpdateRequest);
+      jsonResponse.put("message", "Answer result updated successfully");
+      return jsonResponse;
+    }
+    catch (Exception e ){
+      jsonResponse.put("message", "Error updating answer result: " + e.getMessage());
+      return jsonResponse;
+
+    }
   }
 }

@@ -1,10 +1,12 @@
 package project.maru.presentation;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -39,11 +41,9 @@ public class RankController {
   }
 
   @PostMapping("/answer")
-  public VoiceRecords updateScore(@RequestHeader("Authorization") String accessToken,
+  public JsonNode updateScore(@RequestHeader("Authorization") String accessToken,
       @RequestBody RankUpdateRequest rankUpdateRequest) throws Exception {
     String userId = parseToken.getParseToken(accessToken);
     return rankService.updateRank(userId, rankUpdateRequest);
   }
-
-
 }
