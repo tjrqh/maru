@@ -58,12 +58,12 @@ public class LoginHistoryService {
         YearMonth.from(now).atEndOfMonth().atTime(LocalTime.MAX));
     Integer results = userLoginLogsRepository.findByUserIdAndStartDateAndEndDateCount(
         userId, startDate, endDate);
-
-    if (results == null || results == 0) {
+    /*if (results == null || results == 0) {
       UserLogInLogs userLogInLogs = new UserLogInLogs(userId);
       userLoginLogsRepository.save(userLogInLogs);
-    }
-
+    }*/
+    UserLogInLogs userLogInLogs = new UserLogInLogs(userId);
+    userLoginLogsRepository.save(userLogInLogs);
     Rank r = rankRepository.findScoreByUserId(postLoginRequest.getUserId());
     if (r == null) {
       r = Rank.builder().userId(postLoginRequest.getUserId()).name(postLoginRequest.getUser())
