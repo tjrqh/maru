@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import project.maru.application.dto.SimpleApiResponse;
 import project.maru.application.dto.loginHistoryDto.GetLoginHistoryLoginCountRequest;
 import project.maru.application.dto.loginHistoryDto.GetLoginHistoryLoginCountResponse;
 import project.maru.application.dto.loginHistoryDto.GetLoginHistoryRequest;
