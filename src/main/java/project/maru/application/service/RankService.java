@@ -4,21 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Optional;
-import jdk.jshell.Snippet.Status;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import project.maru.application.dto.rankDto.RankJsonResponse;
 import project.maru.application.dto.rankDto.RankReadResponse;
 import project.maru.application.dto.rankDto.RankUpdateRequest;
-import project.maru.application.dto.voiceRecordsDto.VoiceRecordsCreateRequest;
-import project.maru.domain.QuestionsKr;
 import project.maru.domain.Rank;
-import project.maru.domain.VoiceRecords;
-import project.maru.infrastructure.QuestionsKrRepository;
 import project.maru.infrastructure.RankRepository;
-import project.maru.infrastructure.VoiceRecordsRepository;
 
 
 @Service
@@ -28,7 +20,6 @@ public class RankService {
   private final RankRepository rankRepository;
   private final QuestionsKrService questionsKrService;
   private final VoiceRecordsService voiceRecordsService;
-  private RankJsonResponse rankJsonResponse;
 
 
   public RankReadResponse findTotalScoreByUserId(String userId) {
@@ -48,6 +39,7 @@ public class RankService {
   //랭킹 전체 조회(내 점수 포함/미포함 지정)
   public RankJsonResponse getMyScoreAndTop20Rank(String userId, int limit,
       boolean includeUser) {
+    RankJsonResponse rankJsonResponse;
 
     List<RankReadResponse> topRankLimitByScore = getTopRankLimitByScore(limit);
     for (int i = 0; i < topRankLimitByScore.size(); i++) {

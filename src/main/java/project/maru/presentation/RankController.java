@@ -7,11 +7,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import project.maru.application.dto.rankDto.RankJsonResponse;
 import project.maru.application.dto.rankDto.RankUpdateRequest;
 import project.maru.application.service.RankService;
-import project.maru.domain.QuestionsKr;
-import project.maru.domain.VoiceRecords;
 import project.maru.presentation.util.ParseToken;
 
 @RestController

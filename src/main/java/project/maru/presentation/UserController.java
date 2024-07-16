@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import project.maru.application.dto.userDto.UserTotalCountResponse;
 import project.maru.application.service.UserService;
 
 @RestController

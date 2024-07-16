@@ -13,7 +13,7 @@ import lombok.Setter;
 public class RankJsonResponse {
 
   private List<RankReadResponse> rankings;
-  private RankReadResponse userRanking;
+  private RankReadResponse userRank;
 
   public RankJsonResponse(List<RankReadResponse> rankings) {
     this.rankings = rankings;

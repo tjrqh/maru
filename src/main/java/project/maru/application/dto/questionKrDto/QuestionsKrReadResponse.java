@@ -13,10 +13,9 @@ import lombok.Setter;
 public class QuestionsKrReadResponse {
 
   private int id;
-  @JsonProperty("quotes_id")
-  private int quotesId;
+  @JsonProperty("korean")
   private String question;
-  @JsonProperty("quest_lang")
+  @JsonProperty("english")
   private String questLang;
   private String answer;
 }

@@ -2,13 +2,9 @@ package project.maru.application.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import project.maru.application.dto.questionKrDto.GetQuestionCountResponse;
 import project.maru.application.dto.questionKrDto.QuestionsKrJsonResponse;
 import project.maru.application.dto.questionKrDto.QuestionsKrReadResponse;
 import project.maru.application.dto.rankDto.RankUpdateRequest;

@@ -16,11 +16,10 @@ import project.maru.application.service.QuestionsKrService;
 public class QuestionsKrController {
 
   private final QuestionsKrService questionsKrService;
-
   @Operation(summary = "질문 목록 조회 GET")
   @GetMapping("/questions")
-  public List<QuestionsKrReadResponse> getQuestionsKr(@RequestParam int contentTypeId,
-      @RequestParam int n) {
+  public List<QuestionsKrReadResponse> getQuestionsKr(@RequestParam("contentTypeId") int contentTypeId,
+      @RequestParam("n") int n) {
     return questionsKrService.getRandomQuestionsByQuotesId(contentTypeId, n);
   }
 

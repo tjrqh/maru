@@ -8,7 +8,7 @@ import project.maru.domain.QuestionsKr;
 public interface QuestionsKrRepository extends JpaRepository<QuestionsKr, String> {
 
   QuestionsKr findById(int id);
-  @Query("SELECT new project.maru.application.dto.questionKrDto.QuestionsKrReadResponse(q.id, q.quotes.id, q.question, ql.question, q.answer) " +
+  @Query("SELECT new project.maru.application.dto.questionKrDto.QuestionsKrReadResponse(q.id, q.question, ql.question, q.answer) " +
          "FROM QuestionsKr q " +
          "LEFT JOIN q.questionLanguages ql " +
          "WHERE q.quotes.id = :id")
