@@ -16,8 +16,9 @@ public interface UserLoginLogsRepository extends JpaRepository<UserLogInLogs, Lo
       @Param("startDate") Timestamp startDate, @Param("endDate") Timestamp endDate);
 
   @Query("SELECT DATE_FORMAT(lh.createdAt, '%Y-%m-%d') FROM UserLogInLogs lh WHERE lh.userId = :userId AND lh.createdAt BETWEEN :startDate AND :endDate GROUP BY DATE_FORMAT(lh.createdAt, '%Y-%m-%d') ORDER BY lh.createdAt ASC")
-  List<LocalDate> countLoginByDay(@Param("userId") String userId,
+  List<String> countLoginByDay(@Param("userId") String userId,
       @Param("startDate") Timestamp startDate, @Param("endDate") Timestamp endDate);
+  
 
   @Query("SELECT lh FROM UserLogInLogs lh WHERE lh.userId = :userId AND lh.createdAt BETWEEN :startDate AND :endDate")
   List<UserLogInLogs> findByUserIdAndStartDateAndEndDate(
@@ -30,5 +31,10 @@ public interface UserLoginLogsRepository extends JpaRepository<UserLogInLogs, Lo
   Integer countLoginUsers(@Param("startDate") Timestamp startDate,
       @Param("endDate") Timestamp endDate);
 
-
+  @Query(value = "SELECT COUNT(lh.user_id) FROM user_login_logs lh WHERE lh.user_id = :userId AND lh.created_at BETWEEN :startDate AND :endDate ",
+      nativeQuery = true)
+  Integer findByUserIdAndStartDateAndEndDateCount(
+      @Param("userId") String userId,
+      @Param("startDate") Timestamp startDate,
+      @Param("endDate") Timestamp endDate);
 }

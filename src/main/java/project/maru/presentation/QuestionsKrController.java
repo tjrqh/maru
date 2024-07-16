@@ -1,5 +1,6 @@
 package project.maru.presentation;
 
+import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +17,14 @@ public class QuestionsKrController {
 
   private final QuestionsKrService questionsKrService;
 
+  @Operation(summary = "질문 목록 조회 GET")
   @GetMapping("/questions")
   public List<QuestionsKrReadResponse> getQuestionsKr(@RequestParam int contentTypeId,
       @RequestParam int n) {
     return questionsKrService.getRandomQuestionsByQuotesId(contentTypeId, n);
   }
 
+  @Operation(summary = "전체 질문 수 조회 GET")
   @GetMapping("/total-questions")
   public long getQuestionTotalCount() {
     return questionsKrService.getQuestionTotalCount();
