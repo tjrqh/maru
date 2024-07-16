@@ -25,7 +25,7 @@ public class QuestionsKrController {
 
   @Operation(summary = "전체 질문 수 조회 GET")
   @GetMapping("/total-questions")
-  public long getQuestionTotalCount() {
+  public Number getQuestionTotalCount() {
     return questionsKrService.getQuestionTotalCount();
   }
 
