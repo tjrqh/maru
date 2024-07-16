@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PostLoginRequest {
 
-  private String name;
+  private String user;  //name 값 전달됨.
   @Schema(hidden = true)
   private String userId;
 }
