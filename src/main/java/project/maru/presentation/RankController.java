@@ -1,5 +1,6 @@
 package project.maru.presentation;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -28,7 +29,7 @@ public class RankController {
   private final RankService rankService;
   private final ParseToken parseToken;
 
-
+  @Operation(summary = "랭킹 조회 GET")
   @GetMapping("/rankings")
   public RankJsonResponse getScore(
       @RequestHeader("Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken,
@@ -38,6 +39,7 @@ public class RankController {
     return rankService.getMyScoreAndTop20Rank(userId, limit, userInfoIncluded);
   }
 
+  @Operation(summary = "답변 결과 업데이트 POST")
   @PostMapping("/answer")
   public VoiceRecords updateScore(@RequestHeader("Authorization") String accessToken,
       @RequestBody RankUpdateRequest rankUpdateRequest) throws Exception {

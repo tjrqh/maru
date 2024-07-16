@@ -17,7 +17,7 @@ public class UserController {
   private final UserService userService;
 
   @GetMapping("/total-count")
-  @Operation(summary = "총 유저수 조회")
+  @Operation(summary = "총 유저수 조회 GET")
   public long getUserTotalCount() {
     return userService.findTotalUserCount();
   }

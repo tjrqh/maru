@@ -24,6 +24,7 @@ import project.maru.application.dto.loginHistoryDto.GetLoginHistoryLoginCountRes
 import project.maru.application.dto.loginHistoryDto.GetLoginHistoryRequest;
 import project.maru.application.dto.loginHistoryDto.GetLoginHistoryResponse;
 import project.maru.application.dto.loginHistoryDto.PostLoginRequest;
+import project.maru.application.dto.loginHistoryDto.PostUserInfoResponse;
 import project.maru.application.service.LoginHistoryService;
 import project.maru.presentation.util.ParseToken;
 
@@ -45,14 +46,15 @@ public class LoginHistoryController {
     return LoginHistoryService.findUserLoginHistory(getLoginHistoryRequest);
   }
 
+
   @PostMapping("user-info")
-  @Operation(summary = "로그인 기록 추가", responses = {
+  @Operation(summary = "유저 로그인 기록 로그 POST", responses = {
       @ApiResponse(responseCode = "201", description = "successfully",
           content = @Content(mediaType = "application/json",
               schema = @Schema(implementation = SimpleApiResponse.class)))
   })
-  @Schema(example = "{\"status\":\"success\", \"message\":\"userId logged in!\", \"data\":null}")
-  public SimpleApiResponse<?> PostLoginHistory(
+//  @Schema(example = "{\"status\":\"success\", \"message\":\"userId logged in!\", \"data\":null}")
+  public PostUserInfoResponse PostLoginHistory(
       @RequestHeader(value = "Authorization")
       @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true))
       String accessToken,
@@ -61,9 +63,7 @@ public class LoginHistoryController {
     postLoginRequest.setUserId(userId);
     LoginHistoryService.insertUserLoginHistory(postLoginRequest);
 
-    return SimpleApiResponse.builder().
-        message(userId + " logged in!")
-        .status(ResponseStatus.SUCCESS).build();
+    return PostUserInfoResponse.builder().message("User info received").payload("").build();
   }
 
   @GetMapping("/login-counts")
@@ -76,16 +76,16 @@ public class LoginHistoryController {
     return LoginHistoryService.findUserLoginCount(getLoginHistoryLoginCountRequest);
   }
 
-  @Operation(summary = "오늘 로그인한 회원 수")
-  @GetMapping("/total/today")
-  public project.maru.application.dto.loginHistoryDto.GetLoginHistoryTodayCountResponse GetLoginCountsToday(
+  @Operation(summary = "오늘 로그인한 회원 수 GET")
+  @GetMapping("/users/today-login-count")
+  public int GetLoginCountsToday(
       @RequestHeader(value = "Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken)
       throws Exception {
     return LoginHistoryService.findTodayLoginTotal();
   }
 
   @GetMapping("/attendance")
-  @Operation(summary = "이번달 로그인 이력 조회")
+  @Operation(summary = "이번달 로그인 이력 조회 GET")
   public List<LocalDate> GetLoginCalendar(
       @RequestHeader(value = "Authorization") @Parameter(name = "Authorization", in = ParameterIn.HEADER, schema = @Schema(hidden = true)) String accessToken)
       throws Exception {
