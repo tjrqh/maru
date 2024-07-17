@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.maru.application.dto.loginHistoryDto.GetLoginHistoryLoginCountRequest;
@@ -23,6 +24,7 @@ import project.maru.infrastructure.UserLoginLogsRepository;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class LoginHistoryService {
 
   private final UserLoginLogsRepository userLoginLogsRepository;
@@ -51,19 +53,18 @@ public class LoginHistoryService {
   @Transactional
   public void insertUserLoginHistory(PostLoginRequest postLoginRequest) {
     String userId = postLoginRequest.getUserId();
-    LocalDate now = LocalDate.now().withDayOfMonth(1);
+    LocalDate now = LocalDate.now();
+    log.info("insert user의 로그인 시간은 localdate 기준 : " + now);
     Timestamp startDate = Timestamp.valueOf(
         now.atStartOfDay());
-    Timestamp endDate = Timestamp.valueOf(
-        YearMonth.from(now).atEndOfMonth().atTime(LocalTime.MAX));
+    Timestamp endDate = Timestamp.valueOf(now.atTime(LocalTime.MAX));
     Integer results = userLoginLogsRepository.findByUserIdAndStartDateAndEndDateCount(
         userId, startDate, endDate);
-    /*if (results == null || results == 0) {
+    if (results == null || results == 0) {
       UserLogInLogs userLogInLogs = new UserLogInLogs(userId);
       userLoginLogsRepository.save(userLogInLogs);
-    }*/
-    UserLogInLogs userLogInLogs = new UserLogInLogs(userId);
-    userLoginLogsRepository.save(userLogInLogs);
+    }
+  
     Rank r = rankRepository.findScoreByUserId(postLoginRequest.getUserId());
     if (r == null) {
       r = Rank.builder().userId(postLoginRequest.getUserId()).name(postLoginRequest.getUser())
