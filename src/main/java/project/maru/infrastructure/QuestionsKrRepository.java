@@ -14,7 +14,6 @@ public interface QuestionsKrRepository extends JpaRepository<QuestionsKr, String
          "WHERE q.quotes.id = :id")
   QuestionsKrReadResponse findByQuotesId(int id);
 
-
   @Query("SELECT COUNT(e) FROM QuestionsKr e WHERE e.deletedAt IS NULL")
   long countByDeletedAtIsNull();
 

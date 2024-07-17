@@ -9,7 +9,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreRemove;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,6 +20,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import project.maru.presentation.util.DateUtils;
 
 @Entity
 @Table(name = "quotes")
@@ -40,6 +43,16 @@ public class Quotes {
   @UpdateTimestamp
   private LocalDateTime updatedAt;
   private LocalDateTime deletedAt;
+
+  @PrePersist
+      @PreUpdate
+      protected void onUpdateTimestamp() {
+          if (createdAt == null) {
+              createdAt = LocalDateTime.now();
+          } else {
+              updatedAt = LocalDateTime.now();
+          }
+      }
 
   @ManyToOne
   @JoinColumn(name = "content_type_id")

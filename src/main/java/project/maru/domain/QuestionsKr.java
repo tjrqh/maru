@@ -9,7 +9,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreRemove;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,7 +24,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name = "questions")
+@Table(name = "questions_kr")
 @Getter
 @Setter
 @Builder
@@ -48,7 +50,7 @@ public class QuestionsKr {
   private LocalDateTime deletedAt;
 
   @ManyToOne
-  @JoinColumn(name = "quotes_id")
+  @JoinColumn(name = "quote_id")
   @JsonIgnore
   private Quotes quotes;
 
@@ -60,6 +62,16 @@ public class QuestionsKr {
   @OneToMany(mappedBy = "questionsKr")
   @JsonIgnore
   private List<VoiceRecords> voiceRecords;
+
+  @PrePersist
+      @PreUpdate
+      protected void onUpdateTimestamp() {
+          if (createdAt == null) {
+              createdAt = LocalDateTime.now();
+          } else {
+              updatedAt = LocalDateTime.now();
+          }
+      }
 
 
   @PreRemove

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import project.maru.application.dto.SimpleApiResponse;
 import project.maru.application.dto.loginHistoryDto.GetLoginHistoryLoginCountRequest;
 import project.maru.application.dto.loginHistoryDto.GetLoginHistoryLoginCountResponse;
 import project.maru.application.dto.loginHistoryDto.GetLoginHistoryRequest;
@@ -49,7 +48,7 @@ public class LoginHistoryController {
   @Operation(summary = "유저 로그인 기록 로그 POST", responses = {
       @ApiResponse(responseCode = "201", description = "successfully",
           content = @Content(mediaType = "application/json",
-              schema = @Schema(implementation = SimpleApiResponse.class)))
+              schema = @Schema(implementation = PostUserInfoResponse.class)))
   })
 //  @Schema(example = "{\"status\":\"success\", \"message\":\"userId logged in!\", \"data\":null}")
   public PostUserInfoResponse PostLoginHistory(

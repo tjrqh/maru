@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.maru.application.dto.loginHistoryDto.GetLoginHistoryLoginCountRequest;
@@ -20,9 +21,11 @@ import project.maru.domain.Rank;
 import project.maru.domain.UserLogInLogs;
 import project.maru.infrastructure.RankRepository;
 import project.maru.infrastructure.UserLoginLogsRepository;
+import project.maru.presentation.util.DateUtils;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class LoginHistoryService {
 
   private final UserLoginLogsRepository userLoginLogsRepository;
@@ -51,14 +54,14 @@ public class LoginHistoryService {
   @Transactional
   public void insertUserLoginHistory(PostLoginRequest postLoginRequest) {
     String userId = postLoginRequest.getUserId();
-    LocalDate now = LocalDate.now().withDayOfMonth(1);
-    Timestamp startDate = Timestamp.valueOf(
-        now.atStartOfDay());
-    Timestamp endDate = Timestamp.valueOf(
-        YearMonth.from(now).atEndOfMonth().atTime(LocalTime.MAX));
+    LocalDate now = LocalDate.now();
+    log.info("insert user의 로그인 시간은 localdate 기준 : " + now);
+    // 오늘 시작, 끝 가져옴
+    Timestamp startDate = DateUtils.toKstTimestampStartOfDay(now);
+    Timestamp endDate = DateUtils.toKstTimestampEndOfDay(now);
+
     Integer results = userLoginLogsRepository.findByUserIdAndStartDateAndEndDateCount(
         userId, startDate, endDate);
-
     if (results == null || results == 0) {
       UserLogInLogs userLogInLogs = new UserLogInLogs(userId);
       userLoginLogsRepository.save(userLogInLogs);
@@ -66,20 +69,19 @@ public class LoginHistoryService {
 
     Rank r = rankRepository.findScoreByUserId(postLoginRequest.getUserId());
     if (r == null) {
-      r = Rank.builder().userId(postLoginRequest.getUserId()).name(postLoginRequest.getName())
+      r = Rank.builder().userId(postLoginRequest.getUserId()).name(postLoginRequest.getUser())
           .score(0).build();
     } else {
-      r.setName(postLoginRequest.getName());
+      r.setName(postLoginRequest.getUser());
     }
     rankRepository.save(r);
   }
 
   public List<LocalDate> findUserLoginCalendar(String userId) {
     LocalDate now = LocalDate.now().withDayOfMonth(1);
-    Timestamp startDate = Timestamp.valueOf(
-        now.atStartOfDay());
-    Timestamp endDate = Timestamp.valueOf(
-        YearMonth.from(now).atEndOfMonth().atTime(LocalTime.MAX));
+
+    Timestamp startDate = DateUtils.toKstTimestampStartOfMonth(now);
+    Timestamp endDate = DateUtils.toKstTimestampEndOfMonth(now);
 
     List<String> dateStrings = userLoginLogsRepository.countLoginByDay(userId, startDate, endDate);
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -91,10 +93,9 @@ public class LoginHistoryService {
 
   public int findTodayLoginTotal() {
     LocalDate now = LocalDate.now();
-    Timestamp startDate = Timestamp.valueOf(
-        now.atStartOfDay());
-    Timestamp endDate = Timestamp.valueOf(
-        now.atTime(LocalTime.MAX));
+    Timestamp startDate = DateUtils.toKstTimestampStartOfDay(now);
+    Timestamp endDate = DateUtils.toKstTimestampEndOfDay(now);
+
     Integer count = userLoginLogsRepository.countLoginUsers(startDate, endDate);
     if (count == null) {
       count = 0;

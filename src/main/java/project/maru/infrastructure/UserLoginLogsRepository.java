@@ -24,7 +24,7 @@ public interface UserLoginLogsRepository extends JpaRepository<UserLogInLogs, Lo
       @Param("startDate") Timestamp startDate,
       @Param("endDate") Timestamp endDate);
 
-  @Query(value = "select count(*) from user_login_logs where  CAST(created_at AS DATE) =  LEFT(NOW(),10)",
+  @Query(value = "select count(DISTINCT user_id) from user_login_logs where  CAST(created_at AS DATE) =  LEFT(NOW(),10)",
       nativeQuery = true)
   Integer countLoginUsers(@Param("startDate") Timestamp startDate,
       @Param("endDate") Timestamp endDate);
