@@ -9,7 +9,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreRemove;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -60,6 +62,16 @@ public class QuestionsKr {
   @OneToMany(mappedBy = "questionsKr")
   @JsonIgnore
   private List<VoiceRecords> voiceRecords;
+
+  @PrePersist
+      @PreUpdate
+      protected void onUpdateTimestamp() {
+          if (createdAt == null) {
+              createdAt = LocalDateTime.now();
+          } else {
+              updatedAt = LocalDateTime.now();
+          }
+      }
 
 
   @PreRemove
