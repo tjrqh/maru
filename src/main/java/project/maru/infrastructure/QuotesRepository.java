@@ -10,4 +10,8 @@ public interface QuotesRepository extends JpaRepository<Quotes, Long> {
   @Query("SELECT q.id FROM Quotes q WHERE q.contentType.id = :contentTypeId")
   List<Integer> findByContentTypeId(int contentTypeId);
 
+  @Query("SELECT q.title FROM Quotes q WHERE q.id = :id")
+  String findtitleById(int id);
+
+
 }

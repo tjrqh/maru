@@ -18,4 +18,12 @@ public class QuestionsKrReadResponse {
   @JsonProperty("english")
   private String questLang;
   private String answer;
+  private String title;
+
+  public QuestionsKrReadResponse(int id, String question, String questLang, String answer) {
+    this.id = id;
+    this.question = question;
+    this.questLang = questLang;
+    this.answer = answer;
+  }
 }
