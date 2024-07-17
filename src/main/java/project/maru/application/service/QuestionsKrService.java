@@ -44,7 +44,9 @@ public class QuestionsKrService {
 
     // 랜덤하게 섞인 리스트에서 n개의 값을 가져옴
     for (int i = 0; i < count && i < shuffledList.size(); i++) {
-      randomValues.add(questionsKrRepository.findByQuotesId(shuffledList.get(i)));
+      QuestionsKrReadResponse quest = questionsKrRepository.findByQuotesId(shuffledList.get(i));
+      quest.setTitle(quotesRepository.findtitleById(shuffledList.get(i)));
+      randomValues.add(quest);
     }
     questionsKrJsonResponse = new QuestionsKrJsonResponse(randomValues);
     return questionsKrJsonResponse.getQuestions();
