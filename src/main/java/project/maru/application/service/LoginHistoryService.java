@@ -64,8 +64,7 @@ public class LoginHistoryService {
       UserLogInLogs userLogInLogs = new UserLogInLogs(userId);
       userLoginLogsRepository.save(userLogInLogs);
     }
-    UserLogInLogs userLogInLogs = new UserLogInLogs(userId);
-    userLoginLogsRepository.save(userLogInLogs);
+  
     Rank r = rankRepository.findScoreByUserId(postLoginRequest.getUserId());
     if (r == null) {
       r = Rank.builder().userId(postLoginRequest.getUserId()).name(postLoginRequest.getUser())
